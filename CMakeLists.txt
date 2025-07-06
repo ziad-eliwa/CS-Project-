@@ -10,4 +10,4 @@ user.cpp
 add_executable(trial ${SOURCE_FILES})
 
 find_package(Crow)
-target_link_libraries(your_project PUBLIC Crow::Crow)
+target_link_libraries(CSIIProject PUBLIC Crow::Crow)
