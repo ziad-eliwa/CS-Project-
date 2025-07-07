@@ -1,0 +1,3 @@
+/home/ziad-eliwa/Desktop/CS-Project-/build/CMakeFiles/csii.dir
+/home/ziad-eliwa/Desktop/CS-Project-/build/CMakeFiles/edit_cache.dir
+/home/ziad-eliwa/Desktop/CS-Project-/build/CMakeFiles/rebuild_cache.dir
