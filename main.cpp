@@ -1,27 +1,28 @@
 #include "include/crow_all.h"
-#include <unordered_map>
 #include <openssl/sha.h>
-#include <sstream>
-#include <iomanip>
+#include <sqlite3.h>
+#include <bits/stdc++.h>
+#include "handlers/login_handler.h"
+#include "handlers/signup_handler.h"
 
 int main()
 {
+    sqlite3 * db;
+
+    sqlite3_open("users.db",&db);
+
+    sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS users (username TEXT PRIMARY KEY, password TEXT);", nullptr, nullptr, nullptr);
+
     crow::SimpleApp app;
 
     CROW_ROUTE(app, "/login").methods("POST"_method)([](const crow::request& req){
-        auto body = crow::json::load(req.body);
-        if(!body) return crow::response(400,"Invalid JSON");
-        
-        return crow::response(200, "login successful");
+        return handleLogin(db, req);
     });
 
     CROW_ROUTE(app, "/signup").methods("POST"_method)([](const crow::request& req){
-        auto body = crow::json::load(req.body);
-        if(!body) return crow::response(400,"Invalid JSON");
-
-        return crow::response(200, "Signup successful");
-
+       return handleSignup(db, req); 
     });
 
     app.port(18080).multithreaded().run();
+    sqlite3_close(db);
 }

@@ -4,7 +4,6 @@ set(CMAKE_CXX_STANDARD 14)
 
 set(SOURCE_FILES 
 main.cpp
-user.cpp
 )
 
 add_executable(trial ${SOURCE_FILES})
