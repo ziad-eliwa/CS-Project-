@@ -5,18 +5,21 @@
 #include <string>
 
 // For now, we'll use a simple in-memory storage for demo users
-// In a real application, this would be a database
-static std::unordered_map<std::string, std::string> users = {
+// In a real application, this would be a database "CURRENTLY"
+static std::unordered_map<std::string, std::string> users = { //USERS MAP
     {"user@example.com", "password123"},
     {"admin@test.com", "admin123"},
     {"john@email.com", "mypassword"}
+    //using unsorted_map for faster lookups and for special keys which are emails
 };
 
 crow::response LoginHandler::handle_login(const crow::request& req) {
     std::cout << "Login request received\n";
     std::cout << "Request body: " << req.body << "\n";
-    
+    //the above will cout in the terminal 
+
     // Parse form data
+    //gets the data that is entered by the user
     auto form_data = parse_form_data(req.body);
     
     // Check if email and password are provided
@@ -40,13 +43,13 @@ crow::response LoginHandler::handle_login(const crow::request& req) {
     
     // Validate credentials
     if (validate_credentials(email, password)) {
-        std::cout << "Login successful for: " << email << "\n";
-        crow::response res(200);
+        // SUCCESS: Create JSON response with redirect
+        crow::response res(200); // this just sends a success response
         res.set_header("Content-Type", "application/json");
-        res.write("{\"success\": true, \"message\": \"Login successful!\", \"redirect\": \"/welcome?login=success\"}");
+        res.write("{\"success\": true, \"message\": \"Login successful!\", \"redirect\": \"/welcome?login=success\"}"); // you will see this in the URL
         return res;
     } else {
-        std::cout << "Login failed for: " << email << "\n";
+        // FAILURE: Return 401 Unauthorized
         return crow::response(401, "Invalid email or password");
     }
 }
