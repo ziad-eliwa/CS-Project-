@@ -1,4 +1,5 @@
 #pragma once
+<<<<<<< HEAD
 
 #include "../include/crow_all.h"
 #include <sqlite3.h>
@@ -7,3 +8,17 @@ crow::response handleSignUp(sqlite3* db, const crow::request& req)
 {
     
 }
+=======
+#include "crow.h"
+#include <unordered_map>
+#include <string>
+
+class SignupHandler {
+public:
+    static crow::response handle_signup(const crow::request& req);
+    static std::unordered_map<std::string, std::string> parse_form_data(const std::string& body);
+private:
+    static bool is_email_taken(const std::string& email);
+    static bool insert_user(const std::string& username, const std::string& email, const std::string& hashed_pw);
+};
+>>>>>>> origin
