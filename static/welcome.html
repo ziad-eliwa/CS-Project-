@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>WELCOME TO 4_ANGRY_MEN</title>
+  <!---Custom CSS File--->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="welcome-container">
+      <div class="welcome-content">
+        <header>WELCOME!</header>
+        <div class="welcome-message">
+          <h2>You have successfully logged in!</h2>
+          <p>Welcome back to your dashboard.</p>
+          <div class="welcome-actions">
+            <button class="button" onclick="logout()">Logout</button>
+            <button class="button" onclick="goToDashboard()">Go to Dashboard</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .welcome-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .welcome-content {
+      background: #fff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 15px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .welcome-content header {
+      font-size: 28px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .welcome-message h2 {
+      font-size: 24px;
+      color: #4070f4;
+      margin-bottom: 15px;
+    }
+
+    .welcome-message p {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    .welcome-actions {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .welcome-actions .button {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .welcome-actions .button:first-child {
+      background: #dc3545;
+      color: #fff;
+    }
+
+    .welcome-actions .button:first-child:hover {
+      background: #c82333;
+    }
+
+    .welcome-actions .button:last-child {
+      background: #4070f4;
+      color: #fff;
+    }
+
+    .welcome-actions .button:last-child:hover {
+      background: #0e4bf1;
+    }
+
+    @media (max-width: 480px) {
+      .welcome-actions {
+        flex-direction: column;
+      }
+      
+      .welcome-actions .button {
+        width: 100%;
+      }
+    }
+  </style>
+
+  <script>
+    function logout() {
+      // Clear any stored session data
+      localStorage.removeItem('userSession');
+      sessionStorage.removeItem('userSession');
+      
+      // Redirect to login page
+      window.location.href = '/';
+    }
+
+    function goToDashboard() {
+      // For now, just show an alert - you can implement a real dashboard later
+      alert('Dashboard functionality coming soon!');
+    }
+
+    // Check if user is actually logged in (basic security measure)
+    window.addEventListener('load', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const loggedIn = urlParams.get('login') === 'success';
+      
+      if (!loggedIn) {
+        // If user didn't come from a successful login, redirect to login page
+        window.location.href = '/';
+      }
+    });
+  </script>
+</body>
+</html>

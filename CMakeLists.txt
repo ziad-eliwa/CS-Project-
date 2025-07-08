@@ -1,13 +1,18 @@
-cmake_minimum_required(VERSION 3.13)  
-project(CSIIProject)               
-set(CMAKE_CXX_STANDARD 14)            
+cmake_minimum_required(VERSION 3.10)
+project(MyCrowApp)
 
-set(SOURCE_FILES 
-main.cpp
-user.cpp
+set(CMAKE_CXX_STANDARD 17)
+
+find_package(Crow CONFIG REQUIRED)
+
+file(GLOB_RECURSE SOURCES
+    main.cpp
+    handlers/*.cpp
+    utils/*.cpp
 )
 
-add_executable(trial ${SOURCE_FILES})
+include_directories(include)
 
-find_package(Crow)
-target_link_libraries(CSIIProject PUBLIC Crow::Crow)
+add_executable(MyCrowApp ${SOURCES})
+
+target_link_libraries(MyCrowApp PRIVATE Crow::Crow)
