@@ -64,6 +64,7 @@ crow::response handle_login(sqlite3* db, const crow::request& req) {
     if (username.empty() || password.empty())
         return crow::response(400, "Missing fields");
 
+
     if (checkCredentials(db, username, password)) {
         return crow::response(200, "Login successful");
     } else {

@@ -32,9 +32,12 @@ int main()
 {
     sqlite3 * db;
 
-    sqlite3_open("users.db",&db);
+  if (sqlite3_open("../users.db", &db)) {
+    std::cerr << "Can't open database: " << sqlite3_errmsg(db) << std::endl;
+    return 1;
+}
 
-    sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS users (username TEXT PRIMARY KEY, password TEXT);", nullptr, nullptr, nullptr);
+    sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS users (username TEXT UNIQUE, password TEXT);", nullptr, nullptr, nullptr);
 
     crow::SimpleApp app;
     
