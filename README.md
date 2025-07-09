@@ -9,5 +9,5 @@ Mohamed Ezzat mohamedezzat9006@aucegypt.edu 900243906
 Ziad Eliwa ziadeliwa@aucegypt.edu 900246124
  
 # To Run, Just Create a build folder and use CMake to run the project and make sure the following is installed: 
-SQLite3 - OpenSSL
+SQLite3 
 
