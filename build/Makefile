@@ -117,24 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named csii
+# Target rules for targets named MyCrowApp
 
 # Build rule for target.
-csii: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 csii
-.PHONY : csii
+MyCrowApp: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 MyCrowApp
+.PHONY : MyCrowApp
 
 # fast build rule for target.
-csii/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/csii.dir/build.make CMakeFiles/csii.dir/build
-.PHONY : csii/fast
+MyCrowApp/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyCrowApp.dir/build.make CMakeFiles/MyCrowApp.dir/build
+.PHONY : MyCrowApp/fast
 
 handlers/login_handler.o: handlers/login_handler.cpp.o
 .PHONY : handlers/login_handler.o
 
 # target to build an object file
 handlers/login_handler.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/csii.dir/build.make CMakeFiles/csii.dir/handlers/login_handler.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyCrowApp.dir/build.make CMakeFiles/MyCrowApp.dir/handlers/login_handler.cpp.o
 .PHONY : handlers/login_handler.cpp.o
 
 handlers/login_handler.i: handlers/login_handler.cpp.i
@@ -142,7 +142,7 @@ handlers/login_handler.i: handlers/login_handler.cpp.i
 
 # target to preprocess a source file
 handlers/login_handler.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/csii.dir/build.make CMakeFiles/csii.dir/handlers/login_handler.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyCrowApp.dir/build.make CMakeFiles/MyCrowApp.dir/handlers/login_handler.cpp.i
 .PHONY : handlers/login_handler.cpp.i
 
 handlers/login_handler.s: handlers/login_handler.cpp.s
@@ -150,7 +150,7 @@ handlers/login_handler.s: handlers/login_handler.cpp.s
 
 # target to generate assembly for a file
 handlers/login_handler.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/csii.dir/build.make CMakeFiles/csii.dir/handlers/login_handler.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyCrowApp.dir/build.make CMakeFiles/MyCrowApp.dir/handlers/login_handler.cpp.s
 .PHONY : handlers/login_handler.cpp.s
 
 handlers/signup_handler.o: handlers/signup_handler.cpp.o
@@ -158,7 +158,7 @@ handlers/signup_handler.o: handlers/signup_handler.cpp.o
 
 # target to build an object file
 handlers/signup_handler.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/csii.dir/build.make CMakeFiles/csii.dir/handlers/signup_handler.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyCrowApp.dir/build.make CMakeFiles/MyCrowApp.dir/handlers/signup_handler.cpp.o
 .PHONY : handlers/signup_handler.cpp.o
 
 handlers/signup_handler.i: handlers/signup_handler.cpp.i
@@ -166,7 +166,7 @@ handlers/signup_handler.i: handlers/signup_handler.cpp.i
 
 # target to preprocess a source file
 handlers/signup_handler.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/csii.dir/build.make CMakeFiles/csii.dir/handlers/signup_handler.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyCrowApp.dir/build.make CMakeFiles/MyCrowApp.dir/handlers/signup_handler.cpp.i
 .PHONY : handlers/signup_handler.cpp.i
 
 handlers/signup_handler.s: handlers/signup_handler.cpp.s
@@ -174,7 +174,7 @@ handlers/signup_handler.s: handlers/signup_handler.cpp.s
 
 # target to generate assembly for a file
 handlers/signup_handler.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/csii.dir/build.make CMakeFiles/csii.dir/handlers/signup_handler.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyCrowApp.dir/build.make CMakeFiles/MyCrowApp.dir/handlers/signup_handler.cpp.s
 .PHONY : handlers/signup_handler.cpp.s
 
 main.o: main.cpp.o
@@ -182,7 +182,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/csii.dir/build.make CMakeFiles/csii.dir/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyCrowApp.dir/build.make CMakeFiles/MyCrowApp.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -190,7 +190,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/csii.dir/build.make CMakeFiles/csii.dir/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyCrowApp.dir/build.make CMakeFiles/MyCrowApp.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -198,7 +198,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/csii.dir/build.make CMakeFiles/csii.dir/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyCrowApp.dir/build.make CMakeFiles/MyCrowApp.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 utils/db_utils.o: utils/db_utils.cpp.o
@@ -206,7 +206,7 @@ utils/db_utils.o: utils/db_utils.cpp.o
 
 # target to build an object file
 utils/db_utils.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/csii.dir/build.make CMakeFiles/csii.dir/utils/db_utils.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyCrowApp.dir/build.make CMakeFiles/MyCrowApp.dir/utils/db_utils.cpp.o
 .PHONY : utils/db_utils.cpp.o
 
 utils/db_utils.i: utils/db_utils.cpp.i
@@ -214,7 +214,7 @@ utils/db_utils.i: utils/db_utils.cpp.i
 
 # target to preprocess a source file
 utils/db_utils.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/csii.dir/build.make CMakeFiles/csii.dir/utils/db_utils.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyCrowApp.dir/build.make CMakeFiles/MyCrowApp.dir/utils/db_utils.cpp.i
 .PHONY : utils/db_utils.cpp.i
 
 utils/db_utils.s: utils/db_utils.cpp.s
@@ -222,7 +222,7 @@ utils/db_utils.s: utils/db_utils.cpp.s
 
 # target to generate assembly for a file
 utils/db_utils.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/csii.dir/build.make CMakeFiles/csii.dir/utils/db_utils.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyCrowApp.dir/build.make CMakeFiles/MyCrowApp.dir/utils/db_utils.cpp.s
 .PHONY : utils/db_utils.cpp.s
 
 utils/hash_utils.o: utils/hash_utils.cpp.o
@@ -230,7 +230,7 @@ utils/hash_utils.o: utils/hash_utils.cpp.o
 
 # target to build an object file
 utils/hash_utils.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/csii.dir/build.make CMakeFiles/csii.dir/utils/hash_utils.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyCrowApp.dir/build.make CMakeFiles/MyCrowApp.dir/utils/hash_utils.cpp.o
 .PHONY : utils/hash_utils.cpp.o
 
 utils/hash_utils.i: utils/hash_utils.cpp.i
@@ -238,7 +238,7 @@ utils/hash_utils.i: utils/hash_utils.cpp.i
 
 # target to preprocess a source file
 utils/hash_utils.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/csii.dir/build.make CMakeFiles/csii.dir/utils/hash_utils.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyCrowApp.dir/build.make CMakeFiles/MyCrowApp.dir/utils/hash_utils.cpp.i
 .PHONY : utils/hash_utils.cpp.i
 
 utils/hash_utils.s: utils/hash_utils.cpp.s
@@ -246,7 +246,7 @@ utils/hash_utils.s: utils/hash_utils.cpp.s
 
 # target to generate assembly for a file
 utils/hash_utils.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/csii.dir/build.make CMakeFiles/csii.dir/utils/hash_utils.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyCrowApp.dir/build.make CMakeFiles/MyCrowApp.dir/utils/hash_utils.cpp.s
 .PHONY : utils/hash_utils.cpp.s
 
 # Help Target
@@ -257,7 +257,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... csii"
+	@echo "... MyCrowApp"
 	@echo "... handlers/login_handler.o"
 	@echo "... handlers/login_handler.i"
 	@echo "... handlers/login_handler.s"

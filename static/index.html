@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>4_ANGRY_MEN</title>
-  <!---Custom CSS File--->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,7 +13,7 @@
     <div class="login form">
       <header>Login</header>
       <form id="loginForm" action="/login" method="POST">
-        <input type="email" name="email" placeholder="Enter your email" required>
+        <input type="text" name="username" placeholder="Enter your username" required>
         <input type="password" name="password" placeholder="Enter your password" required>
         <a href="#">Forgot password?</a>
         <input type="submit" class="button" value="Login">
@@ -27,12 +26,12 @@
     </div>
     <div class="registration form">
       <header>Signup</header>
-      <form action="#">
-        <input type="text" placeholder="Enter your email">
-        <input type="password" placeholder="Create a password">
-        <input type="password" placeholder="Confirm your password">
-        <input type="button" class="button" value="Signup">
-      </form>
+      <form id="signupForm" method="POST">
+  <input type="text" name="username" placeholder="Enter your username" required>
+  <input type="password" name="password" placeholder="Create a password" required>
+  <input type="password" name="confirmPassword" placeholder="Confirm your password" required>
+  <input type="submit" class="button" value="Signup">
+</form>
       <div class="signup">
         <span class="signup">Already have an account?
          <label for="check">Login</label>
@@ -44,24 +43,22 @@
   <script>
     document.getElementById('loginForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      
+
       const formData = new FormData(this);
-      const email = formData.get('email');
+      const username = formData.get('username');
       const password = formData.get('password');
-      
-      // Basic client-side validation
-      if (!email || !password) {
+
+      if (!username || !password) {
         alert('Please fill in all fields');
         return;
       }
-      
-      // Send login request
+
       fetch('/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+        body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
       })
       .then(response => {
         if (response.ok) {
@@ -78,7 +75,6 @@
       })
       .then(data => {
         if (data.success && data.redirect) {
-          // Store login state and redirect
           sessionStorage.setItem('userSession', 'true');
           window.location.href = data.redirect;
         } else {
@@ -91,5 +87,51 @@
       });
     });
   </script>
+  <script>
+  document.getElementById('signupForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const form = new FormData(this);
+    const username = form.get('username');
+    const password = form.get('password');
+    const confirmPassword = form.get('confirmPassword');
+
+    // Client-side validation
+    if (!username || !password || !confirmPassword) {
+      alert('Please fill in all fields');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    // Send POST request
+    fetch('/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+    })
+    .then(response => {
+      return response.text();
+    })
+    .then(text => {
+      if (text.toLowerCase().includes("success")) {
+        alert("Signup successful! You can now log in.");
+        document.getElementById('check').checked = false; // Switch to login form
+      } else {
+        alert("Signup failed: " + text);
+      }
+    })
+    .catch(error => {
+      console.error("Signup error:", error);
+      alert("An error occurred during signup");
+    });
+  });
+</script>
+
 </body>
 </html>

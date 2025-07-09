@@ -3378,9 +3378,7 @@ enum http_errno {
 
 
 /* Get an http_errno value from an http_parser */
-#define CROW_HTTP_PARSER_ERRNO(p) ((enum http_errno)(p)->cmake_minimum_required(VERSION 3.13)
-project(CrowApp)
-http_errno)
+#define CROW_HTTP_PARSER_ERRNO(p) ((enum http_errno)(p)->http_errno)
 
 
     struct http_parser

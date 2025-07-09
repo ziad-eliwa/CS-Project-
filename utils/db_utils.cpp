@@ -30,6 +30,7 @@ bool userExists(sqlite3* db, const std::string& username){
     sqlite3_finalize(stmt);
     return exists;    
 }
+
 bool registerUser(sqlite3* db, const std::string& username, const std::string& password){
     std::string hashedPassword = hashed(password);
     std::string query = "INSERT INTO users (username,password) VALUES(?,?);";
