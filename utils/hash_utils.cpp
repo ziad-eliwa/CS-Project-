@@ -1,17 +1,15 @@
-#include "hash_utils.h"
-#include <sodium.h>
-#include <stdexcept>
+#include <string>
+#include <functional>
+#include <sstream>
+#include <iomanip>
 
 
+std::string hashed(const std::string& password) {
+    std::hash<std::string> hasher;
+    size_t hash_value = hasher(password);
 
-std::string hashed(const std::string &pass) {
-        char hashed_pass[crypto_pwhash_STRBYTES];
-    
-        if (crypto_pwhash_str(hashed_pass,pass.c_str(), pass.size(),crypto_pwhash_OPSLIMIT_INTERACTIVE,
-            crypto_pwhash_MEMLIMIT_INTERACTIVE) != 0) {
-            throw std::runtime_error("Password hashing failed");
-        }
-        
-        return std::string(hashed_pass);
+
+    std::ostringstream oss;
+    oss << std::hex << std::setw(16) << std::setfill('0') << hash_value;
+    return oss.str();
 }
-
