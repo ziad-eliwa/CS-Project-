@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timeline - 4_ANGRY_MEN</title>
+    <link rel="stylesheet" href="timeline.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-left">
+          <h2 class="logo">4_ANGRY_MEN</h2>
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search friends, posts..." />
+          </div>
+        </div>
+        <div class="nav-right">
+          <div class="nav-icons">
+            <div class="nav-icon">
+              <i class="fas fa-home"></i>
+            </div>
+            <div class="nav-icon notification-icon">
+              <i class="fas fa-bell"></i>
+              <span class="notification-badge">3</span>
+            </div>
+            <div class="nav-icon">
+              <i class="fas fa-user-friends"></i>
+            </div>
+            <div class="nav-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+          </div>
+          <div class="profile-dropdown">
+            <img
+              src="https://via.placeholder.com/40"
+              alt="Profile"
+              class="profile-pic"
+            />
+            <span>John Doe</span>
+            <i class="fas fa-caret-down"></i>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="main-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-section">
+          <div class="user-info">
+            <img
+              src="https://via.placeholder.com/60"
+              alt="Profile"
+              class="user-avatar"
+            />
+            <div class="user-details">
+              <h3>John Doe</h3>
+              <p>@johndoe</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <ul class="sidebar-menu">
+            <li class="active"><i class="fas fa-home"></i> Timeline</li>
+            <li><i class="fas fa-user"></i> Profile</li>
+            <li>
+              <a href="/friends"><i class="fas fa-user-friends"></i> Friends</a>
+            </li>
+            <li><i class="fas fa-images"></i> Photos</li>
+            <li><i class="fas fa-cog"></i> Settings</li>
+          </ul>
+        </div>
+
+        <div class="sidebar-section">
+          <h4>Online Friends</h4>
+          <div class="online-friends">
+            <div class="friend-item">
+              <img src="https://via.placeholder.com/30" alt="Friend" />
+              <span>Alice Smith</span>
+              <div class="online-indicator"></div>
+            </div>
+            <div class="friend-item">
+              <img src="https://via.placeholder.com/30" alt="Friend" />
+              <span>Bob Wilson</span>
+              <div class="online-indicator"></div>
+            </div>
+            <div class="friend-item">
+              <img src="https://via.placeholder.com/30" alt="Friend" />
+              <span>Carol Brown</span>
+              <div class="online-indicator"></div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Create Post Section -->
+        <div class="create-post">
+          <div class="create-post-header">
+            <img
+              src="https://via.placeholder.com/50"
+              alt="Profile"
+              class="post-avatar"
+            />
+            <input
+              type="text"
+              placeholder="What's on your mind, John?"
+              class="create-post-input"
+            />
+          </div>
+          <div class="create-post-actions">
+            <button class="post-action-btn">
+              <i class="fas fa-image"></i> Photo/Video
+            </button>
+            <button class="post-action-btn">
+              <i class="fas fa-smile"></i> Feeling/Activity
+            </button>
+            <button class="post-action-btn">
+              <i class="fas fa-map-marker-alt"></i> Check In
+            </button>
+          </div>
+          <div class="create-post-footer">
+            <select class="privacy-selector">
+              <option>🌍 Public</option>
+              <option>👥 Friends</option>
+              <option>🔒 Only Me</option>
+            </select>
+            <button class="post-btn">Post</button>
+          </div>
+        </div>
+
+        <!-- Posts Feed -->
+        <div class="posts-feed">
+          <!-- Post 1 -->
+          <article class="post">
+            <div class="post-header">
+              <img
+                src="https://via.placeholder.com/50"
+                alt="User"
+                class="post-avatar"
+              />
+              <div class="post-user-info">
+                <h4>Alice Smith</h4>
+                <p class="post-time">2 hours ago • 🌍</p>
+              </div>
+              <div class="post-options">
+                <i class="fas fa-ellipsis-h"></i>
+              </div>
+            </div>
+            <div class="post-content">
+              <p>
+                Just finished my morning run! Beautiful weather today. Who wants
+                to join me tomorrow? 🏃‍♀️☀️
+              </p>
+              <div class="post-image">
+                <img
+                  src="https://via.placeholder.com/500x300"
+                  alt="Post image"
+                />
+              </div>
+            </div>
+            <div class="post-stats">
+              <span class="likes-count">👍 42 likes</span>
+              <span class="comments-count">💬 8 comments</span>
+              <span class="shares-count">🔄 3 shares</span>
+            </div>
+            <div class="post-actions">
+              <button class="action-btn like-btn">
+                <i class="far fa-thumbs-up"></i> Like
+              </button>
+              <button class="action-btn comment-btn">
+                <i class="far fa-comment"></i> Comment
+              </button>
+              <button class="action-btn share-btn">
+                <i class="fas fa-share"></i> Share
+              </button>
+            </div>
+            <div class="comments-section">
+              <div class="write-comment">
+                <img
+                  src="https://via.placeholder.com/35"
+                  alt="Your avatar"
+                  class="comment-avatar"
+                />
+                <input
+                  type="text"
+                  placeholder="Write a comment..."
+                  class="comment-input"
+                />
+                <button class="send-comment-btn">
+                  <i class="fas fa-paper-plane"></i>
+                </button>
+              </div>
+              <div class="comments-list">
+                <div class="comment">
+                  <img
+                    src="https://via.placeholder.com/35"
+                    alt="Commenter"
+                    class="comment-avatar"
+                  />
+                  <div class="comment-content">
+                    <div class="comment-bubble">
+                      <strong>Bob Wilson</strong>
+                      <p>Count me in! What time are we meeting?</p>
+                    </div>
+                    <div class="comment-actions">
+                      <span class="comment-time">1h</span>
+                      <button class="comment-like">Like</button>
+                      <button class="comment-reply">Reply</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Post 2 -->
+          <article class="post">
+            <div class="post-header">
+              <img
+                src="https://via.placeholder.com/50"
+                alt="User"
+                class="post-avatar"
+              />
+              <div class="post-user-info">
+                <h4>Mike Johnson</h4>
+                <p class="post-time">4 hours ago • 👥</p>
+              </div>
+              <div class="post-options">
+                <i class="fas fa-ellipsis-h"></i>
+              </div>
+            </div>
+            <div class="post-content">
+              <p>
+                Working on a new project! Excited to share the results soon.
+                Here's a sneak peek of what we've been building 💻⚡
+              </p>
+            </div>
+            <div class="post-stats">
+              <span class="likes-count">👍 28 likes</span>
+              <span class="comments-count">💬 5 comments</span>
+              <span class="shares-count">🔄 2 shares</span>
+            </div>
+            <div class="post-actions">
+              <button class="action-btn like-btn">
+                <i class="far fa-thumbs-up"></i> Like
+              </button>
+              <button class="action-btn comment-btn">
+                <i class="far fa-comment"></i> Comment
+              </button>
+              <button class="action-btn share-btn">
+                <i class="fas fa-share"></i> Share
+              </button>
+            </div>
+          </article>
+
+          <!-- Post 3 -->
+          <article class="post">
+            <div class="post-header">
+              <img
+                src="https://via.placeholder.com/50"
+                alt="User"
+                class="post-avatar"
+              />
+              <div class="post-user-info">
+                <h4>Sarah Davis</h4>
+                <p class="post-time">6 hours ago • 🌍</p>
+              </div>
+              <div class="post-options">
+                <i class="fas fa-ellipsis-h"></i>
+              </div>
+            </div>
+            <div class="post-content">
+              <p>Amazing sunset today! Nature never fails to amaze me 🌅✨</p>
+              <div class="post-image">
+                <img src="https://via.placeholder.com/500x400" alt="Sunset" />
+              </div>
+            </div>
+            <div class="post-stats">
+              <span class="likes-count">👍 67 likes</span>
+              <span class="comments-count">💬 12 comments</span>
+              <span class="shares-count">🔄 8 shares</span>
+            </div>
+            <div class="post-actions">
+              <button class="action-btn like-btn liked">
+                <i class="fas fa-thumbs-up"></i> Like
+              </button>
+              <button class="action-btn comment-btn">
+                <i class="far fa-comment"></i> Comment
+              </button>
+              <button class="action-btn share-btn">
+                <i class="fas fa-share"></i> Share
+              </button>
+            </div>
+          </article>
+        </div>
+
+        <!-- Load More Button -->
+        <div class="load-more">
+          <button class="load-more-btn">Load More Posts</button>
+        </div>
+      </main>
+
+      <!-- Right Sidebar -->
+      <aside class="right-sidebar">
+        <div class="sidebar-section">
+          <h4>Friend Requests</h4>
+          <div class="friend-requests">
+            <div class="friend-request">
+              <img
+                src="https://via.placeholder.com/50"
+                alt="Request"
+                class="request-avatar"
+              />
+              <div class="request-info">
+                <h5>Emma Wilson</h5>
+                <p>2 mutual friends</p>
+                <div class="request-actions">
+                  <button class="accept-btn">Accept</button>
+                  <button class="decline-btn">Decline</button>
+                </div>
+              </div>
+            </div>
+            <div class="friend-request">
+              <img
+                src="https://via.placeholder.com/50"
+                alt="Request"
+                class="request-avatar"
+              />
+              <div class="request-info">
+                <h5>David Lee</h5>
+                <p>5 mutual friends</p>
+                <div class="request-actions">
+                  <button class="accept-btn">Accept</button>
+                  <button class="decline-btn">Decline</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <h4>Suggested Friends</h4>
+          <div class="suggested-friends">
+            <div class="suggestion">
+              <img
+                src="https://via.placeholder.com/40"
+                alt="Suggestion"
+                class="suggestion-avatar"
+              />
+              <div class="suggestion-info">
+                <h6>Lisa Chen</h6>
+                <p>3 mutual friends</p>
+                <button class="add-friend-btn">Add Friend</button>
+              </div>
+            </div>
+            <div class="suggestion">
+              <img
+                src="https://via.placeholder.com/40"
+                alt="Suggestion"
+                class="suggestion-avatar"
+              />
+              <div class="suggestion-info">
+                <h6>Tom Anderson</h6>
+                <p>1 mutual friend</p>
+                <button class="add-friend-btn">Add Friend</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <h4>Trending</h4>
+          <div class="trending-topics">
+            <div class="trending-item">#TechNews</div>
+            <div class="trending-item">#MorningRun</div>
+            <div class="trending-item">#SunsetPhotography</div>
+            <div class="trending-item">#WeekendVibes</div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <script src="timeline.js"></script>
+  </body>
+</html>

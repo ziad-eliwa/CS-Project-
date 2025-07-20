@@ -54,9 +54,36 @@ int main()
         return serve_file("static/style.css", "text/css");
     });
     
+    CROW_ROUTE(app, "/timeline.css")([]() {
+        return serve_file("static/timeline.css", "text/css");
+    });
+    
+    CROW_ROUTE(app, "/timeline.js")([]() {
+        return serve_file("static/timeline.js", "application/javascript");
+    });
+    
+    CROW_ROUTE(app, "/friends")([](const crow::request& req) {
+        std::string session_id = get_session_from_cookie(req);
+        if (active_sessions.find(session_id) == active_sessions.end()) {
+            // No valid session - redirect to login
+            crow::response res(302);
+            res.set_header("Location", "/");
+            return res;
+        }
+        return serve_file("static/friends.html", "text/html");
+    });
+    
+    CROW_ROUTE(app, "/friends.css")([]() {
+        return serve_file("static/friends.css", "text/css");
+    });
+    
+    CROW_ROUTE(app, "/friends.js")([]() {
+        return serve_file("static/friends.js", "application/javascript");
+    });
+    
     CROW_ROUTE(app, "/welcome")([](const crow::request& req) {
         std::string session_id = get_session_from_cookie(req);
-        std::cout << "=== WELCOME PAGE ACCESS ATTEMPT ===" << std::endl;
+        std::cout << "=== TIMELINE PAGE ACCESS ATTEMPT ===" << std::endl;
         std::cout << "Session ID from cookie: '" << session_id << "'" << std::endl;
         std::cout << "Active sessions count: " << active_sessions.size() << std::endl;
         
@@ -67,8 +94,8 @@ int main()
             res.set_header("Location", "/");
             return res;
         }
-        std::cout << "✅ VALID SESSION - Serving welcome page for user: " << active_sessions[session_id] << std::endl;
-        return serve_file("static/welcome.html", "text/html");
+        std::cout << "✅ VALID SESSION - Serving timeline page for user: " << active_sessions[session_id] << std::endl;
+        return serve_file("static/timeline.html", "text/html");
     });
     
     CROW_ROUTE(app, "/login").methods("POST"_method)([db](const crow::request& req){

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Friends - 4_ANGRY_MEN</title>
+    <link rel="stylesheet" href="friends.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-left">
+          <h2 class="logo">4_ANGRY_MEN</h2>
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search friends, posts..." />
+          </div>
+        </div>
+        <div class="nav-right">
+          <div class="nav-icons">
+            <div class="nav-icon">
+              <i class="fas fa-home"></i>
+            </div>
+            <div class="nav-icon notification-icon">
+              <i class="fas fa-bell"></i>
+              <span class="notification-badge">3</span>
+            </div>
+            <div class="nav-icon active">
+              <i class="fas fa-user-friends"></i>
+            </div>
+            <div class="nav-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+          </div>
+          <div class="profile-dropdown">
+            <img
+              src="https://via.placeholder.com/40"
+              alt="Profile"
+              class="profile-pic"
+            />
+            <span>John Doe</span>
+            <i class="fas fa-caret-down"></i>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="main-container">
+      <!-- Friends Header -->
+      <div class="friends-header">
+        <h1>Friends</h1>
+        <div class="friends-stats">
+          <span class="stat-item"> <strong>248</strong> Friends </span>
+          <span class="stat-item"> <strong>12</strong> Online </span>
+          <span class="stat-item"> <strong>5</strong> Requests </span>
+        </div>
+      </div>
+
+      <!-- Friends Navigation -->
+      <div class="friends-nav">
+        <div class="nav-tabs">
+          <button class="tab-btn active" data-tab="all-friends">
+            <i class="fas fa-users"></i> All Friends
+          </button>
+          <button class="tab-btn" data-tab="friend-requests">
+            <i class="fas fa-user-plus"></i> Friend Requests
+            <span class="tab-badge">5</span>
+          </button>
+          <button class="tab-btn" data-tab="sent-requests">
+            <i class="fas fa-paper-plane"></i> Sent Requests
+          </button>
+          <button class="tab-btn" data-tab="suggestions">
+            <i class="fas fa-user-tag"></i> Suggestions
+          </button>
+          <button class="tab-btn" data-tab="find-friends">
+            <i class="fas fa-search"></i> Find Friends
+          </button>
+        </div>
+
+        <div class="friends-search">
+          <div class="search-input-container">
+            <i class="fas fa-search"></i>
+            <input
+              type="text"
+              placeholder="Search friends..."
+              class="friends-search-input"
+            />
+          </div>
+          <div class="filter-dropdown">
+            <select class="filter-select">
+              <option value="all">All Friends</option>
+              <option value="online">Online Only</option>
+              <option value="recent">Recently Active</option>
+              <option value="close">Close Friends</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Friends Content -->
+      <div class="friends-content">
+        <!-- All Friends Tab -->
+        <div class="tab-content active" id="all-friends">
+          <div class="friends-grid">
+            <div class="friend-card">
+              <div class="friend-avatar">
+                <img src="https://via.placeholder.com/100" alt="Alice Smith" />
+                <div class="online-status online"></div>
+              </div>
+              <div class="friend-info">
+                <h3>Alice Smith</h3>
+                <p class="friend-mutual">15 mutual friends</p>
+                <p class="friend-status">Active 2 minutes ago</p>
+              </div>
+              <div class="friend-actions">
+                <button class="action-btn message-btn">
+                  <i class="fas fa-comment"></i> Message
+                </button>
+                <button class="action-btn more-btn">
+                  <i class="fas fa-ellipsis-h"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="friend-card">
+              <div class="friend-avatar">
+                <img src="https://via.placeholder.com/100" alt="Bob Wilson" />
+                <div class="online-status online"></div>
+              </div>
+              <div class="friend-info">
+                <h3>Bob Wilson</h3>
+                <p class="friend-mutual">8 mutual friends</p>
+                <p class="friend-status">Active 5 minutes ago</p>
+              </div>
+              <div class="friend-actions">
+                <button class="action-btn message-btn">
+                  <i class="fas fa-comment"></i> Message
+                </button>
+                <button class="action-btn more-btn">
+                  <i class="fas fa-ellipsis-h"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="friend-card">
+              <div class="friend-avatar">
+                <img src="https://via.placeholder.com/100" alt="Carol Brown" />
+                <div class="online-status offline"></div>
+              </div>
+              <div class="friend-info">
+                <h3>Carol Brown</h3>
+                <p class="friend-mutual">23 mutual friends</p>
+                <p class="friend-status">Active 2 hours ago</p>
+              </div>
+              <div class="friend-actions">
+                <button class="action-btn message-btn">
+                  <i class="fas fa-comment"></i> Message
+                </button>
+                <button class="action-btn more-btn">
+                  <i class="fas fa-ellipsis-h"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="friend-card">
+              <div class="friend-avatar">
+                <img src="https://via.placeholder.com/100" alt="David Lee" />
+                <div class="online-status offline"></div>
+              </div>
+              <div class="friend-info">
+                <h3>David Lee</h3>
+                <p class="friend-mutual">5 mutual friends</p>
+                <p class="friend-status">Active 1 day ago</p>
+              </div>
+              <div class="friend-actions">
+                <button class="action-btn message-btn">
+                  <i class="fas fa-comment"></i> Message
+                </button>
+                <button class="action-btn more-btn">
+                  <i class="fas fa-ellipsis-h"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="friend-card">
+              <div class="friend-avatar">
+                <img src="https://via.placeholder.com/100" alt="Emma Davis" />
+                <div class="online-status online"></div>
+              </div>
+              <div class="friend-info">
+                <h3>Emma Davis</h3>
+                <p class="friend-mutual">12 mutual friends</p>
+                <p class="friend-status">Active now</p>
+              </div>
+              <div class="friend-actions">
+                <button class="action-btn message-btn">
+                  <i class="fas fa-comment"></i> Message
+                </button>
+                <button class="action-btn more-btn">
+                  <i class="fas fa-ellipsis-h"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="friend-card">
+              <div class="friend-avatar">
+                <img src="https://via.placeholder.com/100" alt="Frank Miller" />
+                <div class="online-status offline"></div>
+              </div>
+              <div class="friend-info">
+                <h3>Frank Miller</h3>
+                <p class="friend-mutual">7 mutual friends</p>
+                <p class="friend-status">Active 3 days ago</p>
+              </div>
+              <div class="friend-actions">
+                <button class="action-btn message-btn">
+                  <i class="fas fa-comment"></i> Message
+                </button>
+                <button class="action-btn more-btn">
+                  <i class="fas fa-ellipsis-h"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Friend Requests Tab -->
+        <div class="tab-content" id="friend-requests">
+          <div class="requests-section">
+            <h3>Friend Requests (5)</h3>
+            <div class="requests-grid">
+              <div class="request-card">
+                <div class="request-avatar">
+                  <img
+                    src="https://via.placeholder.com/80"
+                    alt="John Anderson"
+                  />
+                </div>
+                <div class="request-info">
+                  <h4>John Anderson</h4>
+                  <p class="request-mutual">3 mutual friends</p>
+                  <p class="request-time">2 hours ago</p>
+                </div>
+                <div class="request-actions">
+                  <button class="accept-request-btn">
+                    <i class="fas fa-check"></i> Accept
+                  </button>
+                  <button class="decline-request-btn">
+                    <i class="fas fa-times"></i> Decline
+                  </button>
+                </div>
+              </div>
+
+              <div class="request-card">
+                <div class="request-avatar">
+                  <img src="https://via.placeholder.com/80" alt="Lisa Chen" />
+                </div>
+                <div class="request-info">
+                  <h4>Lisa Chen</h4>
+                  <p class="request-mutual">7 mutual friends</p>
+                  <p class="request-time">5 hours ago</p>
+                </div>
+                <div class="request-actions">
+                  <button class="accept-request-btn">
+                    <i class="fas fa-check"></i> Accept
+                  </button>
+                  <button class="decline-request-btn">
+                    <i class="fas fa-times"></i> Decline
+                  </button>
+                </div>
+              </div>
+
+              <div class="request-card">
+                <div class="request-avatar">
+                  <img
+                    src="https://via.placeholder.com/80"
+                    alt="Mike Thompson"
+                  />
+                </div>
+                <div class="request-info">
+                  <h4>Mike Thompson</h4>
+                  <p class="request-mutual">1 mutual friend</p>
+                  <p class="request-time">1 day ago</p>
+                </div>
+                <div class="request-actions">
+                  <button class="accept-request-btn">
+                    <i class="fas fa-check"></i> Accept
+                  </button>
+                  <button class="decline-request-btn">
+                    <i class="fas fa-times"></i> Decline
+                  </button>
+                </div>
+              </div>
+
+              <div class="request-card">
+                <div class="request-avatar">
+                  <img
+                    src="https://via.placeholder.com/80"
+                    alt="Sarah Johnson"
+                  />
+                </div>
+                <div class="request-info">
+                  <h4>Sarah Johnson</h4>
+                  <p class="request-mutual">9 mutual friends</p>
+                  <p class="request-time">2 days ago</p>
+                </div>
+                <div class="request-actions">
+                  <button class="accept-request-btn">
+                    <i class="fas fa-check"></i> Accept
+                  </button>
+                  <button class="decline-request-btn">
+                    <i class="fas fa-times"></i> Decline
+                  </button>
+                </div>
+              </div>
+
+              <div class="request-card">
+                <div class="request-avatar">
+                  <img src="https://via.placeholder.com/80" alt="Tom Wilson" />
+                </div>
+                <div class="request-info">
+                  <h4>Tom Wilson</h4>
+                  <p class="request-mutual">4 mutual friends</p>
+                  <p class="request-time">3 days ago</p>
+                </div>
+                <div class="request-actions">
+                  <button class="accept-request-btn">
+                    <i class="fas fa-check"></i> Accept
+                  </button>
+                  <button class="decline-request-btn">
+                    <i class="fas fa-times"></i> Decline
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sent Requests Tab -->
+        <div class="tab-content" id="sent-requests">
+          <div class="requests-section">
+            <h3>Sent Requests (3)</h3>
+            <div class="requests-grid">
+              <div class="request-card">
+                <div class="request-avatar">
+                  <img src="https://via.placeholder.com/80" alt="Kate Miller" />
+                </div>
+                <div class="request-info">
+                  <h4>Kate Miller</h4>
+                  <p class="request-mutual">2 mutual friends</p>
+                  <p class="request-time">Sent 1 day ago</p>
+                </div>
+                <div class="request-actions">
+                  <button class="cancel-request-btn">
+                    <i class="fas fa-times"></i> Cancel Request
+                  </button>
+                </div>
+              </div>
+
+              <div class="request-card">
+                <div class="request-avatar">
+                  <img src="https://via.placeholder.com/80" alt="Ryan Garcia" />
+                </div>
+                <div class="request-info">
+                  <h4>Ryan Garcia</h4>
+                  <p class="request-mutual">6 mutual friends</p>
+                  <p class="request-time">Sent 3 days ago</p>
+                </div>
+                <div class="request-actions">
+                  <button class="cancel-request-btn">
+                    <i class="fas fa-times"></i> Cancel Request
+                  </button>
+                </div>
+              </div>
+
+              <div class="request-card">
+                <div class="request-avatar">
+                  <img
+                    src="https://via.placeholder.com/80"
+                    alt="Nina Rodriguez"
+                  />
+                </div>
+                <div class="request-info">
+                  <h4>Nina Rodriguez</h4>
+                  <p class="request-mutual">1 mutual friend</p>
+                  <p class="request-time">Sent 1 week ago</p>
+                </div>
+                <div class="request-actions">
+                  <button class="cancel-request-btn">
+                    <i class="fas fa-times"></i> Cancel Request
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Suggestions Tab -->
+        <div class="tab-content" id="suggestions">
+          <div class="suggestions-section">
+            <h3>People You May Know</h3>
+            <div class="suggestions-grid">
+              <div class="suggestion-card">
+                <div class="suggestion-avatar">
+                  <img
+                    src="https://via.placeholder.com/100"
+                    alt="Alex Turner"
+                  />
+                </div>
+                <div class="suggestion-info">
+                  <h4>Alex Turner</h4>
+                  <p class="suggestion-mutual">8 mutual friends</p>
+                  <p class="suggestion-reason">Friend of Alice Smith</p>
+                </div>
+                <div class="suggestion-actions">
+                  <button class="add-friend-suggestion-btn">
+                    <i class="fas fa-user-plus"></i> Add Friend
+                  </button>
+                  <button class="remove-suggestion-btn">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="suggestion-card">
+                <div class="suggestion-avatar">
+                  <img
+                    src="https://via.placeholder.com/100"
+                    alt="Jessica Brown"
+                  />
+                </div>
+                <div class="suggestion-info">
+                  <h4>Jessica Brown</h4>
+                  <p class="suggestion-mutual">12 mutual friends</p>
+                  <p class="suggestion-reason">Suggested for you</p>
+                </div>
+                <div class="suggestion-actions">
+                  <button class="add-friend-suggestion-btn">
+                    <i class="fas fa-user-plus"></i> Add Friend
+                  </button>
+                  <button class="remove-suggestion-btn">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="suggestion-card">
+                <div class="suggestion-avatar">
+                  <img
+                    src="https://via.placeholder.com/100"
+                    alt="Mark Stevens"
+                  />
+                </div>
+                <div class="suggestion-info">
+                  <h4>Mark Stevens</h4>
+                  <p class="suggestion-mutual">5 mutual friends</p>
+                  <p class="suggestion-reason">Friend of Bob Wilson</p>
+                </div>
+                <div class="suggestion-actions">
+                  <button class="add-friend-suggestion-btn">
+                    <i class="fas fa-user-plus"></i> Add Friend
+                  </button>
+                  <button class="remove-suggestion-btn">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Find Friends Tab -->
+        <div class="tab-content" id="find-friends">
+          <div class="find-friends-section">
+            <h3>Find Friends</h3>
+            <div class="advanced-search">
+              <div class="search-filters">
+                <div class="filter-group">
+                  <label>Search by name or email:</label>
+                  <input
+                    type="text"
+                    placeholder="Enter name or email"
+                    class="search-filter-input"
+                  />
+                </div>
+                <div class="filter-group">
+                  <label>Location:</label>
+                  <input
+                    type="text"
+                    placeholder="City, State"
+                    class="search-filter-input"
+                  />
+                </div>
+                <div class="filter-group">
+                  <label>School/University:</label>
+                  <input
+                    type="text"
+                    placeholder="School name"
+                    class="search-filter-input"
+                  />
+                </div>
+                <div class="filter-group">
+                  <label>Workplace:</label>
+                  <input
+                    type="text"
+                    placeholder="Company name"
+                    class="search-filter-input"
+                  />
+                </div>
+                <button class="search-friends-btn">
+                  <i class="fas fa-search"></i> Search Friends
+                </button>
+              </div>
+            </div>
+
+            <div class="search-results">
+              <h4>Search Results</h4>
+              <div class="search-results-grid">
+                <div class="search-result-card">
+                  <div class="result-avatar">
+                    <img
+                      src="https://via.placeholder.com/60"
+                      alt="Anna Wilson"
+                    />
+                  </div>
+                  <div class="result-info">
+                    <h5>Anna Wilson</h5>
+                    <p class="result-details">Works at Tech Corp</p>
+                    <p class="result-mutual">3 mutual friends</p>
+                  </div>
+                  <div class="result-actions">
+                    <button class="add-friend-result-btn">
+                      <i class="fas fa-user-plus"></i> Add Friend
+                    </button>
+                  </div>
+                </div>
+
+                <div class="search-result-card">
+                  <div class="result-avatar">
+                    <img
+                      src="https://via.placeholder.com/60"
+                      alt="Chris Taylor"
+                    />
+                  </div>
+                  <div class="result-info">
+                    <h5>Chris Taylor</h5>
+                    <p class="result-details">Lives in New York</p>
+                    <p class="result-mutual">1 mutual friend</p>
+                  </div>
+                  <div class="result-actions">
+                    <button class="add-friend-result-btn">
+                      <i class="fas fa-user-plus"></i> Add Friend
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="friends.js"></script>
+  </body>
+</html>
