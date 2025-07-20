@@ -8,6 +8,10 @@
 #include <string>
 #include <sqlite3.h>
 
+
+    // Converts "username=alice&password=mypassword123" 
+    // Into: {"username" -> "alice", "password" -> "mypassword123"}
+
  std::unordered_map<std::string, std::string> parse_form_data(const std::string& body) {
     std::unordered_map<std::string, std::string> form_data;
     std::istringstream stream(body);

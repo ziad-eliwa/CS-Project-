@@ -2,12 +2,14 @@ cmake_minimum_required(VERSION 3.10)
 project(MyCrowApp)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Crow CONFIG REQUIRED)
-find_package(SQLite3 REQUIRED)
-find_package(ZLIB REQUIRED)
+# Find required packages
+find_package(Threads REQUIRED)
 
-include_directories(include)
+# Include directories
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 add_executable(MyCrowApp
     main.cpp
@@ -17,4 +19,13 @@ add_executable(MyCrowApp
     utils/hash_utils.cpp
 )
 
-target_link_libraries(MyCrowApp PRIVATE sqlite3 ssl crypto z sodium)
+# Link all libraries together
+target_link_libraries(MyCrowApp PRIVATE 
+    sqlite3
+    Threads::Threads
+)
+
+# For Windows, you might need to link additional libraries
+if(WIN32)
+    target_link_libraries(MyCrowApp PRIVATE ws2_32 wsock32)
+endif()
