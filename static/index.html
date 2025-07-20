@@ -1,137 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>4_ANGRY_MEN</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="container">
-    <input type="checkbox" id="check">
-    <div class="login form">
-      <header>Login</header>
-      <form id="loginForm" action="/login" method="POST">
-        <input type="text" name="username" placeholder="Enter your username" required>
-        <input type="password" name="password" placeholder="Enter your password" required>
-        <a href="#">Forgot password?</a>
-        <input type="submit" class="button" value="Login">
-      </form>
-      <div class="signup">
-        <span class="signup">Don't have an account?
-         <label for="check">Signup</label>
-        </span>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>4_ANGRY_MEN</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <input type="checkbox" id="check" />
+      <div class="login form">
+        <header>Login</header>
+        <form id="loginForm" action="/login" method="POST">
+          <input
+            type="text"
+            name="username"
+            placeholder="Enter your username"
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter your password"
+            required
+          />
+          <a href="#">Forgot password?</a>
+          <input type="submit" class="button" value="Login" />
+        </form>
+        <div class="signup">
+          <span class="signup"
+            >Don't have an account?
+            <label for="check">Signup</label>
+          </span>
+        </div>
+      </div>
+      <div class="registration form">
+        <header>Signup</header>
+        <form id="signupForm" method="POST">
+          <input
+            type="text"
+            name="username"
+            placeholder="Enter your username"
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Create a password"
+            required
+          />
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm your password"
+            required
+          />
+          <input type="submit" class="button" value="Signup" />
+        </form>
+        <div class="signup">
+          <span class="signup"
+            >Already have an account?
+            <label for="check">Login</label>
+          </span>
+        </div>
       </div>
     </div>
-    <div class="registration form">
-      <header>Signup</header>
-      <form id="signupForm" method="POST">
-  <input type="text" name="username" placeholder="Enter your username" required>
-  <input type="password" name="password" placeholder="Create a password" required>
-  <input type="password" name="confirmPassword" placeholder="Confirm your password" required>
-  <input type="submit" class="button" value="Signup">
-</form>
-      <div class="signup">
-        <span class="signup">Already have an account?
-         <label for="check">Login</label>
-        </span>
-      </div>
-    </div>
-  </div>
 
-  <script>
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-      e.preventDefault();
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
 
-      const formData = new FormData(this);
-      const username = formData.get('username');
-      const password = formData.get('password');
+          const formData = new FormData(this);
+          const username = formData.get("username");
+          const password = formData.get("password");
 
-      if (!username || !password) {
-        alert('Please fill in all fields');
-        return;
-      }
+          if (!username || !password) {
+            alert("Please fill in all fields");
+            return;
+          }
 
-      fetch('/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
-      })
-      .then(response => {
-        if (response.ok) {
-          return response.text().then(text => {
-            try {
-              return JSON.parse(text);
-            } catch (e) {
-              return { success: false, message: text };
-            }
-          });
-        } else {
-          return response.text().then(text => ({ success: false, message: text }));
-        }
-      })
-      .then(data => {
-        if (data.success && data.redirect) {
-          sessionStorage.setItem('userSession', 'true');
-          window.location.href = data.redirect;
-        } else {
-          alert('Login failed: ' + data.message);
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred during login');
-      });
-    });
-  </script>
-  <script>
-  document.getElementById('signupForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+          fetch("/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: username,
+              password: password,
+            }),
+          })
+            .then((response) => {
+              if (response.ok) {
+                return response.text().then((text) => {
+                  try {
+                    return JSON.parse(text);
+                  } catch (e) {
+                    return { success: false, message: text };
+                  }
+                });
+              } else {
+                return response
+                  .text()
+                  .then((text) => ({ success: false, message: text }));
+              }
+            })
+            .then((data) => {
+              if (data.success && data.redirect) {
+                console.log(data.message);
+                sessionStorage.setItem("userSession", "true");
+                window.location.href = data.redirect;
+              } else {
+                console.log("Login failed:", data.message);
+                alert("Login failed: " + data.message);
+              }
+              console.log("Response data:", data);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert("An error occurred during login");
+            });
+        });
+    </script>
+    <script>
+      document
+        .getElementById("signupForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
 
-    const form = new FormData(this);
-    const username = form.get('username');
-    const password = form.get('password');
-    const confirmPassword = form.get('confirmPassword');
+          const form = new FormData(this);
+          const username = form.get("username");
+          const password = form.get("password");
+          const confirmPassword = form.get("confirmPassword");
 
-    // Client-side validation
-    if (!username || !password || !confirmPassword) {
-      alert('Please fill in all fields');
-      return;
-    }
+          // Client-side validation
+          if (!username || !password || !confirmPassword) {
+            alert("Please fill in all fields");
+            return;
+          }
 
-    if (password !== confirmPassword) {
-      alert('Passwords do not match');
-      return;
-    }
+          if (password !== confirmPassword) {
+            alert("Passwords do not match");
+            return;
+          }
 
-    // Send POST request
-    fetch('/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
-    })
-    .then(response => {
-      return response.text();
-    })
-    .then(text => {
-      if (text.toLowerCase().includes("success")) {
-        alert("Signup successful! You can now log in.");
-        document.getElementById('check').checked = false; // Switch to login form
-      } else {
-        alert("Signup failed: " + text);
-      }
-    })
-    .catch(error => {
-      console.error("Signup error:", error);
-      alert("An error occurred during signup");
-    });
-  });
-</script>
-
-</body>
+          // Send POST request
+          fetch("/signup", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: username,
+              password: password,
+            }),
+          })
+            .then((response) => {
+              return response.text();
+            })
+            .then((text) => {
+              if (text.toLowerCase().includes("success")) {
+                alert("Signup successful! You can now log in.");
+                document.getElementById("check").checked = false; // Switch to login form
+              } else {
+                alert("Signup failed: " + text);
+              }
+            })
+            .catch((error) => {
+              console.error("Signup error:", error);
+              alert("An error occurred during signup");
+            });
+        });
+    </script>
+  </body>
 </html>

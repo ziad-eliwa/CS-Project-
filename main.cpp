@@ -3,6 +3,7 @@
 #include <sstream>
 #include <iomanip>
 #include <fstream>
+#include <filesystem>
 #include <sqlite3.h>
 #include "handlers/login_handler.h"
 #include "handlers/signup_handler.h"
@@ -13,9 +14,25 @@ using ::get_session_from_cookie; //extracts session ID from HTTP cookies
 
 
 crow::response serve_file(const std::string& path, const std::string& content_type) {
-    std::ifstream file(path, std::ios::binary);
+    // Get the executable's directory and go up to project root
+    std::filesystem::path exe_path = std::filesystem::current_path();
+    std::filesystem::path project_root = exe_path;
+    
+    // If we're in build/Debug, go up two levels to project root
+    if (project_root.filename() == "Debug" && project_root.parent_path().filename() == "build") {
+        project_root = project_root.parent_path().parent_path();
+    }
+    // If we're just in build, go up one level
+    else if (project_root.filename() == "build") {
+        project_root = project_root.parent_path();
+    }
+    
+    std::filesystem::path full_path = project_root / path;
+    std::ifstream file(full_path, std::ios::binary);
     if (!file) {
-        std::cout << "File not found: " << path << "\n";
+        std::cout << "File not found: " << full_path << "\n";
+        std::cout << "Current working directory: " << exe_path << "\n";
+        std::cout << "Project root: " << project_root << "\n";
         return crow::response(404, "File Not Found");
     }
 
@@ -23,7 +40,7 @@ crow::response serve_file(const std::string& path, const std::string& content_ty
     contents << file.rdbuf();
 
     std::string body = contents.str();
-    std::cout << "Loaded file of size: " << body.size() << " bytes\n";
+    std::cout << "Loaded file of size: " << body.size() << " bytes from: " << full_path << "\n";
 
     crow::response res;
     res.set_header("Content-Type", content_type);
@@ -35,7 +52,7 @@ int main()
 {
     sqlite3 * db;
 
-  if (sqlite3_open("users.db", &db)) {
+  if (sqlite3_open("database/users.db", &db)) {
     std::cerr << "Can't open database: " << sqlite3_errmsg(db) << std::endl;
     return 1;
 }
