@@ -1,6 +1,7 @@
 #include "handlers/login_handler.h"
 #include "handlers/signup_handler.h"
 #include "handlers/timeline_handler.h"
+#include "handlers/profile_handler.h"
 #include "include/crow_all.h"
 #include <filesystem>
 #include <fstream>
@@ -151,7 +152,22 @@ int main() {
 
   app.port(18080).multithreaded().run();
   sqlite3_close(db);
+
+
+  CROW_ROUTE(app, "/api/profile").methods("GET"_method)
+    ([db](const crow::request& req) { return handle_get_profile(db, req); });
+
+  CROW_ROUTE(app, "/api/profile").methods("POST"_method)
+    ([db](const crow::request& req) { return handle_update_profile(db, req); });
+
+
+
+
 }
+
+
+
+
 
 //                          to check cookies is working
 /* Open browser Developer Tools (F12)
