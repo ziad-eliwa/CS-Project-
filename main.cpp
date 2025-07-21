@@ -52,7 +52,7 @@ int main()
 {
     sqlite3 * db;
 
-  if (sqlite3_open("database/users.db", &db)) {
+  if (sqlite3_open("../database/users.db", &db)) {
     std::cerr << "Can't open database: " << sqlite3_errmsg(db) << std::endl;
     return 1;
 }
@@ -63,20 +63,20 @@ int main()
     
 
     CROW_ROUTE(app, "/")([]() {
-        std::cout << "Serving index.html from: static/index.html\n";
-        return serve_file("static/index.html", "text/html");
+        std::cout << "Serving index.html from: ../static/index.html\n";
+        return serve_file("../static/index.html", "text/html");
     });
     
     CROW_ROUTE(app, "/style.css")([]() {
-        return serve_file("static/style.css", "text/css");
+        return serve_file("../static/style.css", "text/css");
     });
     
     CROW_ROUTE(app, "/timeline.css")([]() {
-        return serve_file("static/timeline.css", "text/css");
+        return serve_file("../static/timeline.css", "text/css");
     });
     
     CROW_ROUTE(app, "/timeline.js")([]() {
-        return serve_file("static/timeline.js", "application/javascript");
+        return serve_file("../static/timeline.js", "application/javascript");
     });
     
     CROW_ROUTE(app, "/friends")([](const crow::request& req) {
@@ -87,15 +87,15 @@ int main()
             res.set_header("Location", "/");
             return res;
         }
-        return serve_file("static/friends.html", "text/html");
+        return serve_file("../static/friends.html", "text/html");
     });
     
     CROW_ROUTE(app, "/friends.css")([]() {
-        return serve_file("static/friends.css", "text/css");
+        return serve_file("../static/friends.css", "text/css");
     });
     
     CROW_ROUTE(app, "/friends.js")([]() {
-        return serve_file("static/friends.js", "application/javascript");
+        return serve_file("../static/friends.js", "application/javascript");
     });
     
     CROW_ROUTE(app, "/welcome")([](const crow::request& req) {
@@ -105,14 +105,13 @@ int main()
         std::cout << "Active sessions count: " << active_sessions.size() << std::endl;
         
         if (active_sessions.find(session_id) == active_sessions.end()) {
-            // No valid session - redirect to login
-            std::cout << "❌ INVALID SESSION - Redirecting to login" << std::endl;
+            std::cout << "INVALID SESSION - Redirecting to login" << std::endl;
             crow::response res(302);
             res.set_header("Location", "/");
             return res;
         }
-        std::cout << "✅ VALID SESSION - Serving timeline page for user: " << active_sessions[session_id] << std::endl;
-        return serve_file("static/timeline.html", "text/html");
+        std::cout << "VALID SESSION - Serving timeline page for user: " << active_sessions[session_id] << std::endl;
+        return serve_file("../static/timeline.html", "text/html");
     });
     
     CROW_ROUTE(app, "/login").methods("POST"_method)([db](const crow::request& req){
@@ -136,7 +135,7 @@ int main()
         return handle_signup(db, req);
     });
 
-    app.port(8080).multithreaded().run();
+    app.port(18080).multithreaded().run();
     sqlite3_close(db);
 }
 
