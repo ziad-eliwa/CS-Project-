@@ -3,8 +3,9 @@
 #include <jwt-cpp/jwt.h>
 #include <chrono>
 #include <iostream>
+#include "config.h"
 
-static const std::string SECRET_KEY = "YourSuperSecretKeyChangeMe";
+// static const std::string SECRET_KEY = "YourSuperSecretKeyChangeMe";
 
 std::string JWT::generate_token(const std::string& email, const std::string& user_id) {
     using namespace std::chrono;
