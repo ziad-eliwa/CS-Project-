@@ -6,24 +6,24 @@ bool checkCredentials(sqlite3* db, const std::string& username, const std::strin
 bool userExists(sqlite3* db, const std::string& username);
 bool registerUser(sqlite3* db, const std::string& username, const std::string& password);
 // Posts
-bool createPost(sqlite3* db, const std::string& username, const std::string& content);
+int createPost(sqlite3* db, const std::string& username, const std::string& content); // returns postId
 bool deletePost(sqlite3* db, int postId);
 // Feed
-bool getFeed(sqlite3* db, const std::string& username, std::string& feedData);
-bool getUserPosts(sqlite3* db, const std::string& username, std::string& userPostsData);
+std::string getFeed(sqlite3* db, const std::string& username); // returns JSON string
+std::string getUserPosts(sqlite3* db, const std::string& username); // returns JSON string
 // Likes
 bool likePost(sqlite3* db, int postId, const std::string& username);
 bool unlikePost(sqlite3* db, int postId, const std::string& username);
 // Comments 
-bool commentOnPost(sqlite3* db, int postId, const std::string& username, const std::string& comment);
+int commentOnPost(sqlite3* db, int postId, const std::string& username, const std::string& comment); // returns commentId
 bool deleteComment(sqlite3* db, int commentId);
 // friends
 bool addFriend(sqlite3* db, const std::string& username, const std::string& friendUsername);
 bool removeFriend(sqlite3* db, const std::string& username, const std::string& friendUsername);
-bool getFriendsList(sqlite3* db, const std::string& username, std::string& friendsListData);
+std::string getFriendsList(sqlite3* db, const std::string& username); // returns JSON string
 // profile
-bool getProfile(sqlite3* db, const std::string& username, std::string& profileData);
+std::string getProfile(sqlite3* db, const std::string& username); // returns JSON string
 bool updateProfile(sqlite3* db, const std::string& username, const std::string& newProfileData);
 // notifications
-bool getNotifications(sqlite3* db, const std::string& username, std::string& notificationsData);
+std::string getNotifications(sqlite3* db, const std::string& username); // returns JSON string
 bool markNotificationAsRead(sqlite3* db, int notificationId);

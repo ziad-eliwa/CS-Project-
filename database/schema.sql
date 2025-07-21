@@ -13,6 +13,8 @@ CREATE TABLE posts (
     user_id INTEGER,
     content TEXT,
     image_url TEXT,
+    like_count INTEGER DEFAULT 0,
+    comment_count INTEGER DEFAULT 0,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users (id)
 );

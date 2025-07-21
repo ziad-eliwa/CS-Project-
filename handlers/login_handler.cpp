@@ -1,6 +1,6 @@
 #include "login_handler.h"
 #include "../include/crow_all.h"
-#include "../utils/db_utils.h"
+#include "../database/db_utils.h"
 #include "../utils/hash_utils.h"
 #include <iostream>
 #include <sstream>
@@ -25,7 +25,7 @@ crow::response handle_login(sqlite3* db, const crow::request& req) {
         username = body["username"].s();
         password = body["password"].s();
     }
-     else {
+    else {
         return crow::response(415, "Unsupported Content-Type");
     }
 
@@ -72,20 +72,17 @@ std::string get_session_from_cookie(const crow::request& req) {
     if (cookie_header.empty()) {
         return "";
     }
-    
     // return empty string if the session_id feild is not found in the cookie header
     std::string session_prefix = "session_id=";
     size_t pos = cookie_header.find(session_prefix);
     if (pos == std::string::npos) {
         return "";
     }
-    
     pos += session_prefix.length(); // skips the session_id string and looks at the value
     size_t end_pos = cookie_header.find(';', pos); // looks for the next semi-colon
     if (end_pos == std::string::npos) {
         end_pos = cookie_header.length(); // if its not found then it assumes the whole string is the session_id value
     }
-    
     return cookie_header.substr(pos, end_pos - pos); // return substring between the two values ( gives only the session ID value)
 }
 /* 1. User Submits Login Form
