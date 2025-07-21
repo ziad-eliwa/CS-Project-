@@ -5,7 +5,6 @@
 #include <string>
 #include <vector>
 #include <sqlite3.h>
-#include "database/db_utils.h"
 
 class PostService {
 public: 
@@ -15,6 +14,9 @@ public:
 
     // Get all posts by a user
     std::vector<Post> getPostsByUser(sqlite3* db, const std::string& username);
+
+    // Get all posts
+    static std::vector<Post> getAllPosts();
 
     // Update a post's content, image, or privacy
     static bool updatePost(int post_id, const std::string& new_content,

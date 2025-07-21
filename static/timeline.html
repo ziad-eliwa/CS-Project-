@@ -43,7 +43,7 @@
               alt="Profile"
               class="profile-pic"
             />
-            <span>John Doe</span>
+            <span id="profile-username"></span>
             <i class="fas fa-caret-down"></i>
           </div>
         </div>
@@ -113,7 +113,7 @@
             />
             <input
               type="text"
-              placeholder="What's on your mind, John?"
+              placeholder="What's on your mind?"
               class="create-post-input"
             />
           </div>
@@ -391,5 +391,21 @@
     </div>
 
     <script src="timeline.js"></script>
+    <script>
+      function getCurrentUsername() {
+        let username = sessionStorage.getItem('username');
+        if (username) return username;
+        const match = document.cookie.match(/username=([^;]+)/);
+        if (match) return match[1];
+        return '';
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        const username = getCurrentUsername();
+        if (username) {
+          const profileName = document.getElementById('profile-username');
+          if (profileName) profileName.textContent = username;
+        }
+      });
+    </script>
   </body>
 </html>

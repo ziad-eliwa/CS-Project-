@@ -1,4 +1,4 @@
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users  (
     id INTEGER PRIMARY KEY,
     username TEXT UNIQUE,
     password_hash TEXT,
@@ -7,7 +7,7 @@ CREATE TABLE users (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE posts (
+CREATE TABLE IF NOT EXISTS posts  (
     id INTEGER PRIMARY KEY,
     user_id INTEGER,
     content TEXT,
@@ -17,7 +17,7 @@ CREATE TABLE posts (
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
-CREATE TABLE likes (
+CREATE TABLE IF NOT EXISTS likes (
     user_id INTEGER,
     post_id INTEGER,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -26,7 +26,7 @@ CREATE TABLE likes (
     FOREIGN KEY (post_id) REFERENCES posts (id)
 );
 
-CREATE TABLE comments (
+CREATE TABLE IF NOT EXISTS comments (
     id INTEGER PRIMARY KEY,
     post_id INTEGER,
     user_id INTEGER,
@@ -36,7 +36,7 @@ CREATE TABLE comments (
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
-CREATE TABLE friends (
+CREATE TABLE IF NOT EXISTS friends (
     id INTEGER PRIMARY KEY,
     requester_id INTEGER,
     addressee_id INTEGER,
@@ -46,7 +46,7 @@ CREATE TABLE friends (
     FOREIGN KEY (addressee_id) REFERENCES users (id)
 );
 
-CREATE TABLE notifications (
+CREATE TABLE IF NOT EXISTS notifications (
     id INTEGER PRIMARY KEY,
     user_id INTEGER,
     type TEXT,
@@ -57,7 +57,7 @@ CREATE TABLE notifications (
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
-CREATE TABLE feed (
+CREATE TABLE IF NOT EXISTS feed (
     id INTEGER PRIMARY KEY,
     user_id INTEGER,
     post_id INTEGER,
@@ -66,7 +66,7 @@ CREATE TABLE feed (
     FOREIGN KEY (post_id) REFERENCES posts (id)
 );
 
-CREATE TABLE profile (
+CREATE TABLE IF NOT EXISTS profile (
     id INTEGER PRIMARY KEY,
     user_id INTEGER UNIQUE,
     display_name TEXT,

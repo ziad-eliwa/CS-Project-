@@ -111,6 +111,8 @@
               if (data.success && data.redirect) {
                 console.log(data.message);
                 sessionStorage.setItem("userSession", "true");
+                sessionStorage.setItem("username", username); // Save username
+                document.cookie = "username=" + encodeURIComponent(username) + "; path=/";
                 window.location.href = data.redirect;
               } else {
                 console.log("Login failed:", data.message);
@@ -163,6 +165,8 @@
             .then((text) => {
               if (text.toLowerCase().includes("success")) {
                 alert("Signup successful! You can now log in.");
+                sessionStorage.setItem("username", username); // Save username
+                document.cookie = "username=" + encodeURIComponent(username) + "; path=/";
                 document.getElementById("check").checked = false; // Switch to login form
               } else {
                 alert("Signup failed: " + text);

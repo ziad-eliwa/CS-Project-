@@ -1,6 +1,7 @@
 #include "handlers/login_handler.h"
 #include "handlers/signup_handler.h"
 #include "handlers/timeline_handler.h"
+#include "handlers/post_handler.h"
 #include "include/crow_all.h"
 #include <filesystem>
 #include <fstream>
@@ -76,39 +77,38 @@ int main() {
 
   CROW_ROUTE(app, "/")
   ([]() {
-    std::cout << "Serving index.html from: ../static/index.html\n";
-    return serve_file("../static/index.html", "text/html");
+    std::cout << "Serving index.html from: /static/index.html\n";
+    return serve_file("static/index.html", "text/html");
   });
 
   CROW_ROUTE(app, "/style.css")
-  ([]() { return serve_file("../static/style.css", "text/css"); });
+  ([]() { return serve_file("static/style.css", "text/css"); });
 
   CROW_ROUTE(app, "/timeline.css")
-  ([]() { return serve_file("../static/timeline.css", "text/css"); });
+  ([]() { return serve_file("static/timeline.css", "text/css"); });
 
   CROW_ROUTE(app, "/timeline.js")
   ([]() {
-    return serve_file("../static/timeline.js", "application/javascript");
+    return serve_file("static/timeline.js", "application/javascript");
   });
 
   CROW_ROUTE(app, "/friends")
   ([](const crow::request &req) {
     std::string session_id = get_session_from_cookie(req);
     if (active_sessions.find(session_id) == active_sessions.end()) {
-      // No valid session - redirect to login
       crow::response res(302);
       res.set_header("Location", "/");
       return res;
     }
-    return serve_file("../static/friends.html", "text/html");
+    return serve_file("static/friends.html", "text/html");
   });
 
   CROW_ROUTE(app, "/friends.css")
-  ([]() { return serve_file("../static/friends.css", "text/css"); });
+  ([]() { return serve_file("static/friends.css", "text/css"); });
 
   CROW_ROUTE(app, "/friends.js")
   ([]() {
-    return serve_file("../static/friends.js", "application/javascript");
+    return serve_file("static/friends.js", "application/javascript");
   });
 
   CROW_ROUTE(app, "/welcome")
@@ -127,12 +127,27 @@ int main() {
     }
     std::cout << "VALID SESSION - Serving timeline page for user: "
               << active_sessions[session_id] << std::endl;
-    return serve_file("../static/timeline.html", "text/html");
+    return serve_file("static/timeline.html", "text/html");
   });
 
   CROW_ROUTE(app, "/login")
       .methods("POST"_method)(
           [db](const crow::request &req) { return handle_login(db, req); });
+
+  CROW_ROUTE(app, "/api/timeline").methods("GET"_method, "POST"_method)(
+      [db](const crow::request& req) {
+          return timeline_handler::handle_get_timeline(db, req);
+      });
+
+  CROW_ROUTE(app, "/api/posts").methods("GET"_method)(
+      []() {
+          return PostHandler::handleGetAllPosts();
+      });
+
+  CROW_ROUTE(app, "/api/posts").methods("POST"_method)(
+      [](const crow::request& req) {
+          return PostHandler::handleCreatePost(req);
+      });
 
   CROW_ROUTE(app, "/<path>")
   ([](const std::string &path) {
