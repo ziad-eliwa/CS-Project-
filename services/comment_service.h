@@ -23,7 +23,4 @@ public:
 
     // Get a comment by its ID
     static Comment* getCommentById(int comment_id);
-
-    // Update a comment's content
-    static bool updateComment(int comment_id, const std::string& new_content);
 };

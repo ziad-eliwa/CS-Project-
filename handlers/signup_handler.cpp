@@ -35,7 +35,6 @@
     }
 
     if (registerUser(db, username, password)) {
-        ProfileService::createDefaultProfile(db, username); // Create default profile
         return crow::response(201, "Signup successful");
     } else {
         return crow::response(500, "Failed to register user");

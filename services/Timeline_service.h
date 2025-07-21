@@ -13,7 +13,6 @@ class TimelineService{
     TimelineService(Timeline&);
     TimelineService(const TimelineService&);
     void addPost(const Post& post);
-    void deletePost(int postId);
     std::vector<Post> getTimelineForUser(sqlite3* db, const std::string& username);
 };
 

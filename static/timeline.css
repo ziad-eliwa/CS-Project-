@@ -120,13 +120,6 @@ body {
   background: #f0f2f5;
 }
 
-.profile-pic {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
 /* Main Container */
 .main-container {
   display: grid;
@@ -156,13 +149,6 @@ body {
   display: flex;
   align-items: center;
   gap: 15px;
-}
-
-.user-avatar {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  object-fit: cover;
 }
 
 .user-details h3 {
@@ -257,13 +243,6 @@ body {
   align-items: center;
   gap: 15px;
   margin-bottom: 15px;
-}
-
-.post-avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
 }
 
 .create-post-input {
@@ -446,13 +425,6 @@ body {
   margin-bottom: 15px;
 }
 
-.comment-avatar {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
 .comment-input {
   flex: 1;
   padding: 10px 15px;
@@ -546,13 +518,6 @@ body {
   gap: 12px;
 }
 
-.request-avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
 .request-info {
   flex: 1;
 }
@@ -613,13 +578,6 @@ body {
   display: flex;
   gap: 10px;
   align-items: center;
-}
-
-.suggestion-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
 }
 
 .suggestion-info {

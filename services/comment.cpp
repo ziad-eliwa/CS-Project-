@@ -30,6 +30,13 @@ std::time_t Comment::getCreatedAt() const {
     return created_at;
 }
 
+std::string Comment::getTimestamp() const {
+    char buf[32];
+    std::tm* tm_info = std::localtime(&created_at);
+    std::strftime(buf, sizeof(buf), "%Y-%m-%dT%H:%M:%S", tm_info);
+    return std::string(buf);
+}
+
 // Setters
 void Comment::setContent(const std::string& new_content) {
     content = new_content;

@@ -22,6 +22,7 @@ class Comment {
     std::string getUserName() const;
     std::string getContent() const;
     std::time_t getCreatedAt() const;
+    std::string getTimestamp() const;
 
     // Setters
     void setContent(const std::string& new_content);

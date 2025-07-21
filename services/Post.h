@@ -18,14 +18,13 @@ public:
 
     int like_count=0;
     int comment_count=0;
-    int share_count=0;
 
     std::vector <Comment> comments;
 
 
     Post();
     Post(int id, const std::string& user_name, const std::string& content, const std::string& image_url, 
-        std::time_t created_at, int like_count, int comment_count = 0, int share_count = 0);
+        std::time_t created_at, int like_count, int comment_count = 0);
     // Minimal constructor for timeline fetch
     Post(int id, const std::string& content, const std::string& user_name, std::time_t created_at);
 
@@ -39,7 +38,6 @@ public:
     std::time_t getcreated_at() const;
     int getLikeCount() const;
     int getCommentCount() const;
-    int getShareCount() const;
 
     // Setters
     void setId(int new_id);
@@ -50,8 +48,8 @@ public:
     void setPrivacy(const std::string& new_privacy);
     void setLikeCount(int count);
     void setCommentCount(int count);
-    void setShareCount(int count);
     void setCreatedAt(const std::string& createdAt);
+    void setCreatedAt(std::time_t createdAt); // new overload
 };
 
 #endif

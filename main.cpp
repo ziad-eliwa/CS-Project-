@@ -10,6 +10,8 @@
 #include <sqlite3.h>
 #include <sstream>
 #include <unordered_map>
+#include "services/post_service.h"
+#include "handlers/comment_handler.h"
 
 // Use the session management from login_handler
 using ::active_sessions;         // stores the session id->username
@@ -146,19 +148,16 @@ int main() {
         return PostHandler::handleCreatePost(req);
       });
 
-CROW_ROUTE(app, "/api/posts/delete").methods("POST"_method)([](const crow::request &req) {
-    return PostHandler::handleDeletePost(req);
+  CROW_ROUTE(app, "/api/comments").methods("POST"_method)([db](const crow::request& req) {
+    return handle_create_comment(db, req);
+  });
+  CROW_ROUTE(app, "/api/comments").methods("GET"_method)([db](const crow::request& req) {
+    return handle_get_comments(db, req);
   });
 
-  CROW_ROUTE(app, "/profile")
-  ([]() {
-    return serve_file("static/profile.html", "text/html");
-  });
-
-  CROW_ROUTE(app, "/profile.html")
-  ([]() {
-    return serve_file("static/profile.html", "text/html");
-  });
+  CROW_ROUTE(app, "/signup")
+      .methods("POST"_method)(
+          [db](const crow::request &req) { return handle_signup(db, req); });
 
   CROW_ROUTE(app, "/<path>")
   ([](const std::string &path) {
@@ -171,22 +170,8 @@ CROW_ROUTE(app, "/api/posts/delete").methods("POST"_method)([](const crow::reque
       });
   */
 
-  CROW_ROUTE(app, "/signup")
-      .methods("POST"_method)(
-          [db](const crow::request &req) { return handle_signup(db, req); });
-
   app.port(18080).multithreaded().run();
   sqlite3_close(db);
-
-  CROW_ROUTE(app, "/api/profile")
-      .methods("GET"_method)([db](const crow::request &req) {
-        return handle_get_profile(db, req);
-      });
-
-  CROW_ROUTE(app, "/api/profile")
-      .methods("POST"_method)([db](const crow::request &req) {
-        return handle_update_profile(db, req);
-      });
 
     
 }

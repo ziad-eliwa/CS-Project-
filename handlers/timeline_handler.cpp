@@ -27,10 +27,9 @@ namespace timeline_handler {
                 {"user_name", post.getUserName()},
                 {"content", post.getContent()},
                 {"image_url", post.getImageUrl()},
-                {"timestamp", post.getcreated_at()},
+                {"timestamp", post.getTimestamp()},
                 {"like_count", post.getLikeCount()},
-                {"comment_count", post.getCommentCount()},
-                {"share_count", post.getShareCount()}
+                {"comment_count", post.getCommentCount()}
             });
         }
         return crow::response(200, res.dump());

@@ -7,5 +7,4 @@ class PostHandler {
 public:
     static crow::response handleCreatePost(const crow::request& req);
     static crow::response handleGetAllPosts();
-    static crow::response handleDeletePost(const crow::request& req);
 };

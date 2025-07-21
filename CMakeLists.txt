@@ -29,6 +29,7 @@ set(SOURCES
     handlers/post_handler.cpp
     handlers/timeline_handler.cpp
     handlers/profile_handler.cpp
+    handlers/comment_handler.cpp
     services/Post.cpp
     services/Timeline.cpp
     services/post_service.cpp
@@ -38,6 +39,8 @@ set(SOURCES
     services/User.cpp
     services/profile.cpp
     services/profile_services.cpp
+    services/comment.cpp
+    services/comment_service.cpp
     database/db_utils.cpp
 
     # Add other .cpp files as needed

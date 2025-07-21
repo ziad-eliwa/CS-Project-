@@ -33,16 +33,6 @@
             <div class="nav-icon">
               <a href="/friends"> <i class="fas fa-user-friends"></i> </a>
             </div>
-            <div class="nav-icon">
-              <i class="fas fa-envelope"></i>
-            </div>
-          </div>
-          <div class="profile-dropdown">
-            <a href="/profile">
-              <img id="nav-avatar" src="https://via.placeholder.com/40" alt="Profile" class="profile-pic" />
-              <span id="profile-username"></span>
-              <i class="fas fa-caret-down"></i>
-            </a>
           </div>
         </div>
       </div>
@@ -53,14 +43,9 @@
       <aside class="sidebar">
         <div class="sidebar-section">
           <div class="user-info">
-            <img
-              src="https://via.placeholder.com/60"
-              alt="Profile"
-              class="user-avatar"
-            />
             <div class="user-details">
-              <h3>John Doe</h3>
-              <p>@johndoe</p>
+              <h3 id="sidebar-username">Username</h3>
+              <p id="sidebar-username-handle">@username</p>
             </div>
           </div>
         </div>
@@ -68,12 +53,9 @@
         <div class="sidebar-section">
           <ul class="sidebar-menu">
             <li class="active"><i class="fas fa-home"></i> Timeline</li>
-            <li><i class="fas fa-user"></i> Profile</li>
             <li>
               <a href="/friends"><i class="fas fa-user-friends"></i> Friends</a>
             </li>
-            <li><i class="fas fa-images"></i> Photos</li>
-            <li><i class="fas fa-cog"></i> Settings</li>
           </ul>
         </div>
 
@@ -81,17 +63,14 @@
           <h4>Online Friends</h4>
           <div class="online-friends">
             <div class="friend-item">
-              <img src="https://via.placeholder.com/30" alt="Friend" />
               <span>Alice Smith</span>
               <div class="online-indicator"></div>
             </div>
             <div class="friend-item">
-              <img src="https://via.placeholder.com/30" alt="Friend" />
               <span>Bob Wilson</span>
               <div class="online-indicator"></div>
             </div>
             <div class="friend-item">
-              <img src="https://via.placeholder.com/30" alt="Friend" />
               <span>Carol Brown</span>
               <div class="online-indicator"></div>
             </div>
@@ -104,11 +83,9 @@
         <!-- Create Post Section -->
         <div class="create-post">
           <div class="create-post-header">
-            <img
-              src="https://via.placeholder.com/50"
-              alt="Profile"
-              class="post-avatar"
-            />
+            <div class="post-avatar">
+              <!-- Avatar will be removed -->
+            </div>
             <input
               type="text"
               placeholder="What's on your mind?"
@@ -116,22 +93,9 @@
             />
           </div>
           <div class="create-post-actions">
-            <button class="post-action-btn">
-              <i class="fas fa-image"></i> Photo/Video
-            </button>
-            <button class="post-action-btn">
-              <i class="fas fa-smile"></i> Feeling/Activity
-            </button>
-            <button class="post-action-btn">
-              <i class="fas fa-map-marker-alt"></i> Check In
-            </button>
+            
           </div>
           <div class="create-post-footer">
-            <select class="privacy-selector">
-              <option>🌍 Public</option>
-              <option>👥 Friends</option>
-              <option>🔒 Only Me</option>
-            </select>
             <button class="post-btn">Post</button>
           </div>
         </div>
@@ -141,11 +105,9 @@
           <!-- Post 1 -->
           <article class="post" data-post-id="1">
             <div class="post-header">
-              <img
-                src="https://via.placeholder.com/50"
-                alt="User"
-                class="post-avatar"
-              />
+              <div class="post-avatar">
+                <!-- Avatar will be removed -->
+              </div>
               <div class="post-user-info">
                 <h4>Alice Smith</h4>
                 <p class="post-time">2 hours ago • 🌍</p>
@@ -168,8 +130,7 @@
             </div>
             <div class="post-stats">
               <span class="likes-count">👍 42 likes</span>
-              <span class="comments-count">💬 8 comments</span>
-              <span class="shares-count">🔄 3 shares</span>
+              <span class="comments-count"> 8 comments</span>
             </div>
             <div class="post-actions">
               <button class="action-btn like-btn">
@@ -178,17 +139,12 @@
               <button class="action-btn comment-btn">
                 <i class="far fa-comment"></i> Comment
               </button>
-              <button class="action-btn delete-btn" style="background:#e74c3c;color:#fff;">
-                <i class="fas fa-trash"></i> Delete
-              </button>
             </div>
             <div class="comments-section">
               <div class="write-comment">
-                <img
-                  src="https://via.placeholder.com/35"
-                  alt="Your avatar"
-                  class="comment-avatar"
-                />
+                <div class="comment-avatar">
+                  <!-- Avatar will be removed -->
+                </div>
                 <input
                   type="text"
                   placeholder="Write a comment..."
@@ -200,11 +156,9 @@
               </div>
               <div class="comments-list">
                 <div class="comment">
-                  <img
-                    src="https://via.placeholder.com/35"
-                    alt="Commenter"
-                    class="comment-avatar"
-                  />
+                  <div class="comment-avatar">
+                    <!-- Avatar will be removed -->
+                  </div>
                   <div class="comment-content">
                     <div class="comment-bubble">
                       <strong>Bob Wilson</strong>
@@ -224,11 +178,9 @@
           <!-- Post 2 -->
           <article class="post" data-post-id="2">
             <div class="post-header">
-              <img
-                src="https://via.placeholder.com/50"
-                alt="User"
-                class="post-avatar"
-              />
+              <div class="post-avatar">
+                <!-- Avatar will be removed -->
+              </div>
               <div class="post-user-info">
                 <h4>Mike Johnson</h4>
                 <p class="post-time">4 hours ago • 👥</p>
@@ -245,8 +197,7 @@
             </div>
             <div class="post-stats">
               <span class="likes-count">👍 28 likes</span>
-              <span class="comments-count">💬 5 comments</span>
-              <span class="shares-count">🔄 2 shares</span>
+              <span class="comments-count"> 5 comments</span>
             </div>
             <div class="post-actions">
               <button class="action-btn like-btn">
@@ -255,20 +206,15 @@
               <button class="action-btn comment-btn">
                 <i class="far fa-comment"></i> Comment
               </button>
-              <button class="action-btn share-btn">
-                <i class="fas fa-share"></i> Share
-              </button>
             </div>
           </article>
 
           <!-- Post 3 -->
           <article class="post" data-post-id="3">
             <div class="post-header">
-              <img
-                src="https://via.placeholder.com/50"
-                alt="User"
-                class="post-avatar"
-              />
+              <div class="post-avatar">
+                <!-- Avatar will be removed -->
+              </div>
               <div class="post-user-info">
                 <h4>Sarah Davis</h4>
                 <p class="post-time">6 hours ago • 🌍</p>
@@ -286,7 +232,6 @@
             <div class="post-stats">
               <span class="likes-count">👍 67 likes</span>
               <span class="comments-count">💬 12 comments</span>
-              <span class="shares-count">🔄 8 shares</span>
             </div>
             <div class="post-actions">
               <button class="action-btn like-btn liked">
@@ -294,9 +239,6 @@
               </button>
               <button class="action-btn comment-btn">
                 <i class="far fa-comment"></i> Comment
-              </button>
-              <button class="action-btn share-btn">
-                <i class="fas fa-share"></i> Share
               </button>
             </div>
           </article>
@@ -314,11 +256,9 @@
           <h4>Friend Requests</h4>
           <div class="friend-requests">
             <div class="friend-request">
-              <img
-                src="https://via.placeholder.com/50"
-                alt="Request"
-                class="request-avatar"
-              />
+              <div class="request-avatar">
+                <!-- Avatar will be removed -->
+              </div>
               <div class="request-info">
                 <h5>Emma Wilson</h5>
                 <p>2 mutual friends</p>
@@ -329,11 +269,9 @@
               </div>
             </div>
             <div class="friend-request">
-              <img
-                src="https://via.placeholder.com/50"
-                alt="Request"
-                class="request-avatar"
-              />
+              <div class="request-avatar">
+                <!-- Avatar will be removed -->
+              </div>
               <div class="request-info">
                 <h5>David Lee</h5>
                 <p>5 mutual friends</p>
@@ -350,11 +288,9 @@
           <h4>Suggested Friends</h4>
           <div class="suggested-friends">
             <div class="suggestion">
-              <img
-                src="https://via.placeholder.com/40"
-                alt="Suggestion"
-                class="suggestion-avatar"
-              />
+              <div class="suggestion-avatar">
+                <!-- Avatar will be removed -->
+              </div>
               <div class="suggestion-info">
                 <h6>Lisa Chen</h6>
                 <p>3 mutual friends</p>
@@ -362,27 +298,15 @@
               </div>
             </div>
             <div class="suggestion">
-              <img
-                src="https://via.placeholder.com/40"
-                alt="Suggestion"
-                class="suggestion-avatar"
-              />
+              <div class="suggestion-avatar">
+                <!-- Avatar will be removed -->
+              </div>
               <div class="suggestion-info">
                 <h6>Tom Anderson</h6>
                 <p>1 mutual friend</p>
                 <button class="add-friend-btn">Add Friend</button>
               </div>
             </div>
-          </div>
-        </div>
-
-        <div class="sidebar-section">
-          <h4>Trending</h4>
-          <div class="trending-topics">
-            <div class="trending-item">#TechNews</div>
-            <div class="trending-item">#MorningRun</div>
-            <div class="trending-item">#SunsetPhotography</div>
-            <div class="trending-item">#WeekendVibes</div>
           </div>
         </div>
       </aside>
@@ -400,10 +324,10 @@
       document.addEventListener('DOMContentLoaded', function() {
         const username = getCurrentUsername();
         if (username) {
-          const profileName = document.getElementById('profile-username');
-          if (profileName) profileName.textContent = username;
-          const navAvatar = document.getElementById('nav-avatar');
-          if (navAvatar) navAvatar.src = `https://via.placeholder.com/40?text=${username}`;
+          const sidebarName = document.getElementById('sidebar-username');
+          const sidebarHandle = document.getElementById('sidebar-username-handle');
+          if (sidebarName) sidebarName.textContent = username;
+          if (sidebarHandle) sidebarHandle.textContent = '@' + username;
         }
 
         // Handle post deletion

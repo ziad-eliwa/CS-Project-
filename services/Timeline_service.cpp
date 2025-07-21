@@ -22,9 +22,3 @@ std::vector<Post> TimelineService::getTimelineForUser(sqlite3* db, const std::st
 void TimelineService::addPost(const Post& post) {
     timeline.addPost(post);
 }
-
-void TimelineService::deletePost(int postId) {
-    Post dummy;
-    dummy.setId(postId); 
-    timeline.deletePost(dummy);
-}

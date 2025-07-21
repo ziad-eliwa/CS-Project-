@@ -81,24 +81,12 @@ std::vector<Post> getPostsByUser(sqlite3* db, const std::string& username) {
             post.setLikeCount(sqlite3_column_int(stmt, 2));
             post.setCommentCount(sqlite3_column_int(stmt, 3));
             post.setCreatedAt(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4)));
-
             posts.push_back(post);
         }
         sqlite3_finalize(stmt);
     }
 
     return posts;
-}
-
-static bool deletePost(sqlite3* db, int post_id){
-    std::string query = "DELETE FROM posts WHERE id = ?;";
-    sqlite3_stmt* stmt;
-    if (sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, nullptr) != SQLITE_OK)
-        return false;
-    sqlite3_bind_int(stmt, 1, post_id);
-    bool success = (sqlite3_step(stmt) == SQLITE_DONE);
-    sqlite3_finalize(stmt);
-    return success;
 }
 
 static int createPost(sqlite3* db, const std::string& username, const std::string& content, const std::string& image_url){
@@ -160,21 +148,4 @@ std::vector<Post> PostService::getAllPosts() {
     }
     sqlite3_close(db);
     return posts;
-}
-
-bool PostService::deletePost(int post_id) {
-    sqlite3* db;
-    if (sqlite3_open(DB_PATH, &db) != SQLITE_OK) {
-        return false;
-    }
-    std::string query = "DELETE FROM posts WHERE id = ?;";
-    sqlite3_stmt* stmt;
-    bool success = false;
-    if (sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
-        sqlite3_bind_int(stmt, 1, post_id);
-        success = (sqlite3_step(stmt) == SQLITE_DONE);
-        sqlite3_finalize(stmt);
-    }
-    sqlite3_close(db);
-    return success;
 }

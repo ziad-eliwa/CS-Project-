@@ -74,7 +74,9 @@ std::vector<Comment> CommentService::getCommentsByPost(int post_id) {
     sqlite3* db;
     sqlite3_open(DB_PATH, &db);
     std::vector<Comment> comments;
-    std::string query = "SELECT id, post_id, user_name, content, created_at FROM comments WHERE post_id = ? ORDER BY created_at ASC";
+    std::string query = "SELECT comments.id, comments.post_id, users.username, comments.content, comments.created_at "
+                        "FROM comments JOIN users ON comments.user_id = users.id "
+                        "WHERE comments.post_id = ? ORDER BY comments.created_at ASC";
     sqlite3_stmt* stmt;
     if (sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
         sqlite3_bind_int(stmt, 1, post_id);
@@ -138,6 +140,14 @@ bool CommentService::updateComment(int comment_id, const std::string& new_conten
     sqlite3_finalize(stmt);
     sqlite3_close(db);
     return success;
+}
+
+int CommentService::createComment(sqlite3* db, int postId, const std::string& username, const std::string& comment) {
+    return ::createComment(db, postId, username, comment);
+}
+
+bool CommentService::deleteComment(sqlite3* db, int commentId) {
+    return ::deleteComment(db, commentId);
 }
 
 

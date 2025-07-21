@@ -17,7 +17,6 @@ public:
   ~Timeline();
   std::vector<Post> getPosts() const;
   bool addPost(const Post &);
-  bool deletePost(const Post &);
   std::string getUser_ID();
   void setUserID(std::string &);
   std::vector<Post> generateTimeline(const std::vector<Post>& userPosts, const std::vector<Post>& friendsPosts);

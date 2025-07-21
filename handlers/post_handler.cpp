@@ -42,19 +42,3 @@ crow::response PostHandler::handleGetAllPosts() {
     }
     return crow::response(200, res.dump());
 }
-
-crow::response PostHandler::handleDeletePost(const crow::request& req) {
-    try {
-        auto body = json::parse(req.body);
-        int post_id = body["post_id"];
-        bool success = PostService::deletePost(post_id);
-        if (success) {
-            return crow::response(200, "Post deleted successfully");
-        } else {
-            return crow::response(400, "Failed to delete post");
-        }
-    } catch (const std::exception& e) {
-        std::cerr << "[DeletePost] Exception: " << e.what() << std::endl;
-        return crow::response(400, "Invalid JSON");
-    }
-}

@@ -13,10 +13,8 @@ document.addEventListener("DOMContentLoaded", function () {
           newPost.className = 'post';
           newPost.innerHTML = `
             <div class="post-header">
-              <img src="https://via.placeholder.com/50" alt="User" class="post-avatar">
               <div class="post-user-info">
                 <h4>${post.user_name}</h4>
-                <p class="post-time">${post.timestamp || ''}</p>
               </div>
               <div class="post-options">
                 <i class="fas fa-ellipsis-h"></i>
@@ -27,8 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
             <div class="post-stats">
               <span class="likes-count">👍 0 likes</span>
-              <span class="comments-count">💬 0 comments</span>
-              <span class="shares-count">🔄 0 shares</span>
+              <span class="comments-count">�� 0 comments</span>
             </div>
             <div class="post-actions">
               <button class="action-btn like-btn">
@@ -37,13 +34,9 @@ document.addEventListener("DOMContentLoaded", function () {
               <button class="action-btn comment-btn">
                 <i class="far fa-comment"></i> Comment
               </button>
-              <button class="action-btn share-btn">
-                <i class="fas fa-share"></i> Share
-              </button>
             </div>
             <div class="comments-section" style="display:none;">
               <div class="write-comment">
-                <img src="https://via.placeholder.com/35" alt="Your avatar" class="comment-avatar">
                 <input type="text" placeholder="Write a comment..." class="comment-input">
                 <button class="send-comment-btn">
                   <i class="fas fa-paper-plane"></i>
@@ -52,6 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
               <div class="comments-list"></div>
             </div>
           `;
+          newPost.setAttribute('data-post-id', post.id); // Set data-post-id
           postsFeed.appendChild(newPost);
           attachPostEventListeners(newPost);
         });
@@ -65,6 +59,40 @@ document.addEventListener("DOMContentLoaded", function () {
     const match = document.cookie.match(/username=([^;]+)/);
     if (match) return match[1];
     return '';
+  }
+
+  // Fetch and render comments for a post
+  function loadCommentsForPost(postId, commentsListElem) {
+    fetch(`/api/comments?post_id=${postId}`)
+      .then(r => r.json())
+      .then(comments => {
+        commentsListElem.innerHTML = '';
+        comments.forEach(comment => {
+          const newComment = document.createElement('div');
+          newComment.className = 'comment';
+          let commentTime = '';
+          if (typeof comment.created_at === 'number') {
+            commentTime = new Date(comment.created_at * 1000).toLocaleString('en-US', { timeZone: 'Africa/Cairo' });
+          } else if (typeof comment.created_at === 'string') {
+            // Always replace space with T for ISO compatibility
+            const d = new Date(comment.created_at.replace(' ', 'T'));
+            commentTime = isNaN(d) ? comment.created_at : d.toLocaleString('en-US', { timeZone: 'Africa/Cairo' });
+          }
+          newComment.innerHTML = `
+            <div class="comment-content">
+              <div class="comment-bubble">
+                <strong>${comment.user_name}</strong>
+                <p>${comment.content}</p>
+              </div>
+              <div class="comment-actions">
+                <button class="comment-like">Like</button>
+                <button class="comment-reply">Reply</button>
+              </div>
+            </div>
+          `;
+          commentsListElem.appendChild(newComment);
+        });
+      });
   }
 
   // Create post functionality (send to backend)
@@ -99,57 +127,62 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Attach event listeners to post actions (like, comment, etc.)
   function attachPostEventListeners(post) {
-    const likeBtn = post.querySelector(".like-btn");
-    const commentBtn = post.querySelector(".comment-btn");
-    const sendCommentBtn = post.querySelector(".send-comment-btn");
-    const commentInput = post.querySelector(".comment-input");
-    const commentsSection = post.querySelector(".comments-section");
+    const likeBtn = post.querySelector('.like-btn');
+    const commentBtn = post.querySelector('.comment-btn');
+    const sendCommentBtn = post.querySelector('.send-comment-btn');
+    const commentInput = post.querySelector('.comment-input');
+    const commentsSection = post.querySelector('.comments-section');
+    const commentsList = post.querySelector('.comments-list');
+    const postId = post.getAttribute('data-post-id');
 
-    likeBtn.addEventListener("click", function () {
-      this.classList.toggle("liked");
-      if (this.classList.contains("liked")) {
+    // Load comments from backend when post is rendered
+    if (postId && commentsList) {
+      loadCommentsForPost(postId, commentsList);
+    }
+
+    likeBtn.addEventListener('click', function () {
+      this.classList.toggle('liked');
+      if (this.classList.contains('liked')) {
         this.innerHTML = '<i class="fas fa-thumbs-up"></i> Liked';
       } else {
         this.innerHTML = '<i class="far fa-thumbs-up"></i> Like';
       }
     });
 
-    commentBtn.addEventListener("click", function () {
-      if (commentsSection.style.display === "none" || commentsSection.style.display === "") {
-        commentsSection.style.display = "block";
+    commentBtn.addEventListener('click', function () {
+      if (commentsSection.style.display === 'none' || commentsSection.style.display === '') {
+        commentsSection.style.display = 'block';
       } else {
-        commentsSection.style.display = "none";
+        commentsSection.style.display = 'none';
       }
       commentInput.focus();
     });
 
-    sendCommentBtn.addEventListener("click", function () {
+    sendCommentBtn.addEventListener('click', function () {
       const commentText = commentInput.value.trim();
-      if (commentText) {
-        const commentsList = post.querySelector(".comments-list");
-        const newComment = document.createElement("div");
-        newComment.className = "comment";
-        newComment.innerHTML = `
-          <img src="https://via.placeholder.com/35" alt="Your avatar" class="comment-avatar">
-          <div class="comment-content">
-            <div class="comment-bubble">
-              <strong>You</strong>
-              <p>${commentText}</p>
-            </div>
-            <div class="comment-actions">
-              <span class="comment-time">Just now</span>
-              <button class="comment-like">Like</button>
-              <button class="comment-reply">Reply</button>
-            </div>
-          </div>
-        `;
-        commentsList.appendChild(newComment);
-        commentInput.value = "";
+      if (commentText && postId) {
+        fetch('/api/comments', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            post_id: Number(postId),
+            user_name: getCurrentUsername(),
+            content: commentText
+          })
+        })
+        .then(r => {
+          if (r.ok) {
+            commentInput.value = '';
+            loadCommentsForPost(postId, commentsList);
+          } else {
+            r.text().then(msg => alert('Failed to add comment: ' + msg));
+          }
+        });
       }
     });
 
-    commentInput.addEventListener("keypress", function (e) {
-      if (e.key === "Enter") {
+    commentInput.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
         sendCommentBtn.click();
       }
     });
@@ -201,7 +234,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const newComment = document.createElement("div");
         newComment.className = "comment";
         newComment.innerHTML = `
-                    <img src="https://via.placeholder.com/35" alt="Your avatar" class="comment-avatar">
                     <div class="comment-content">
                         <div class="comment-bubble">
                             <strong>You</strong>

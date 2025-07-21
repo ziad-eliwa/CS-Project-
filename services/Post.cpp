@@ -6,13 +6,13 @@ Post::Post() : id(0), user_name(""), content(""), image_url(""), created_at(0) {
 
 // Parameterized constructor
 Post::Post(int id, const std::string& user_name, const std::string& content, const std::string& image_url, 
-    std::time_t created_at, int like_count, int comment_count, int share_count)
+    std::time_t created_at, int like_count, int comment_count)
     : id(id), user_name(user_name), content(content), image_url(image_url),
-      created_at(created_at), like_count(like_count), comment_count(comment_count), share_count(share_count) {}
+      created_at(created_at), like_count(like_count), comment_count(comment_count) {}
 
 // Minimal constructor for timeline fetch
 Post::Post(int id, const std::string& content, const std::string& user_name, std::time_t created_at)
-    : id(id), user_name(user_name), content(content), image_url(""), created_at(created_at), like_count(0), comment_count(0), share_count(0) {}
+    : id(id), user_name(user_name), content(content), image_url(""), created_at(created_at), like_count(0), comment_count(0) {}
 
 // Getters
 int Post::getId() const {
@@ -44,8 +44,11 @@ int Post::getCommentCount() const {
     return comment_count;
 }
 
-int Post::getShareCount() const {
-    return share_count;
+std::string Post::getTimestamp() const {
+    char buf[32];
+    std::tm* tm_info = std::localtime(&created_at);
+    std::strftime(buf, sizeof(buf), "%Y-%m-%dT%H:%M:%S", tm_info);
+    return std::string(buf);
 }
 
 // Setters
@@ -73,8 +76,8 @@ void Post::setCommentCount(int count) {
     comment_count = count;
 }
 
-void Post::setShareCount(int count) {
-    share_count = count;
+void Post::setCreatedAt(std::time_t createdAt) {
+    created_at = createdAt;
 }
 
 void Post::setCreatedAt(const std::string& createdAt) {
@@ -82,6 +85,6 @@ void Post::setCreatedAt(const std::string& createdAt) {
     if (strptime(createdAt.c_str(), "%Y-%m-%d %H:%M:%S", &tm)) {
         this->created_at = mktime(&tm);
     } else {
-        this->created_at = 0; 
+        this->created_at = 0;
     }
 }
