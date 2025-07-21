@@ -67,6 +67,7 @@ void initialize_schema(sqlite3 *db) {
 }
 
 int main() {
+  
   sqlite3 *db;
 
   if (sqlite3_open("../database/users.db", &db)) {
@@ -145,6 +146,10 @@ int main() {
         return PostHandler::handleCreatePost(req);
       });
 
+CROW_ROUTE(app, "/api/posts/delete").methods("POST"_method)([](const crow::request &req) {
+    return PostHandler::handleDeletePost(req);
+  });
+
   CROW_ROUTE(app, "/profile")
   ([]() {
     return serve_file("static/profile.html", "text/html");
@@ -182,6 +187,8 @@ int main() {
       .methods("POST"_method)([db](const crow::request &req) {
         return handle_update_profile(db, req);
       });
+
+    
 }
 
 //                          to check cookies is working

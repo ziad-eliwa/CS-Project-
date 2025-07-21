@@ -26,5 +26,7 @@ public:
     static bool deletePost(int post_id);
     // Create a new post
     static int createPost(const std::string& username, const std::string& content, const std::string& image_url);
-    
+
+
+    static bool PostService::deletePost(int post_id);
 };

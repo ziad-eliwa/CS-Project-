@@ -139,7 +139,7 @@
         <!-- Posts Feed -->
         <div class="posts-feed">
           <!-- Post 1 -->
-          <article class="post">
+          <article class="post" data-post-id="1">
             <div class="post-header">
               <img
                 src="https://via.placeholder.com/50"
@@ -178,8 +178,8 @@
               <button class="action-btn comment-btn">
                 <i class="far fa-comment"></i> Comment
               </button>
-              <button class="action-btn share-btn">
-                <i class="fas fa-share"></i> Share
+              <button class="action-btn delete-btn" style="background:#e74c3c;color:#fff;">
+                <i class="fas fa-trash"></i> Delete
               </button>
             </div>
             <div class="comments-section">
@@ -222,7 +222,7 @@
           </article>
 
           <!-- Post 2 -->
-          <article class="post">
+          <article class="post" data-post-id="2">
             <div class="post-header">
               <img
                 src="https://via.placeholder.com/50"
@@ -262,7 +262,7 @@
           </article>
 
           <!-- Post 3 -->
-          <article class="post">
+          <article class="post" data-post-id="3">
             <div class="post-header">
               <img
                 src="https://via.placeholder.com/50"
@@ -405,6 +405,37 @@
           const navAvatar = document.getElementById('nav-avatar');
           if (navAvatar) navAvatar.src = `https://via.placeholder.com/40?text=${username}`;
         }
+
+        // Handle post deletion
+        document.querySelectorAll('.post').forEach(function(postElem) {
+          const deleteBtn = postElem.querySelector('.delete-btn');
+          if (deleteBtn) {
+            deleteBtn.addEventListener('click', function() {
+              const postId = postElem.getAttribute('data-post-id');
+              if (!postId) {
+                alert('Post ID not found.');
+                return;
+              }
+              fetch('/api/posts/delete', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ post_id: postId })
+              })
+              .then(response => {
+                if (response.ok) {
+                  postElem.remove();
+                } else {
+                  response.text().then(text => alert('Delete failed: ' + text));
+                }
+              })
+              .catch(err => {
+                alert('Error deleting post: ' + err);
+              });
+            });
+          }
+        });
       });
     </script>
   </body>

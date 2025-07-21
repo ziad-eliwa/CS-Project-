@@ -161,3 +161,20 @@ std::vector<Post> PostService::getAllPosts() {
     sqlite3_close(db);
     return posts;
 }
+
+bool PostService::deletePost(int post_id) {
+    sqlite3* db;
+    if (sqlite3_open(DB_PATH, &db) != SQLITE_OK) {
+        return false;
+    }
+    std::string query = "DELETE FROM posts WHERE id = ?;";
+    sqlite3_stmt* stmt;
+    bool success = false;
+    if (sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
+        sqlite3_bind_int(stmt, 1, post_id);
+        success = (sqlite3_step(stmt) == SQLITE_DONE);
+        sqlite3_finalize(stmt);
+    }
+    sqlite3_close(db);
+    return success;
+}
