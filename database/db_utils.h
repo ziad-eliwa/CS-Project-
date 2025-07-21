@@ -27,3 +27,7 @@ bool updateProfile(sqlite3* db, const std::string& username, const std::string& 
 // notifications
 std::string getNotifications(sqlite3* db, const std::string& username); // returns JSON string
 bool markNotificationAsRead(sqlite3* db, int notificationId);
+bool updateUser(sqlite3* db, const std::string& user_id, const std::string& username, const std::string& password_hash, const std::string& profile_pic, const std::string& bio);
+bool deleteUser(sqlite3* db, const std::string& user_id);
+bool getUserByUsername(sqlite3* db, const std::string& username, std::string& user_id, std::string& password_hash, std::string& profile_pic, std::string& bio, time_t& created_at);
+bool getUserByID(sqlite3* db, const std::string& user_id, std::string& username, std::string& password_hash, std::string& profile_pic, std::string& bio, time_t& created_at);

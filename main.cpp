@@ -1,5 +1,6 @@
 #include "handlers/login_handler.h"
 #include "handlers/signup_handler.h"
+#include "handlers/timeline_handler.h"
 #include "include/crow_all.h"
 #include <filesystem>
 #include <fstream>

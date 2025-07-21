@@ -2,15 +2,19 @@
 #ifndef FEED_SERVICE_H
 #define FEED_SERVICE_H
 #include <bits/stdc++.h>
+#include "Timeline.h"
 #include "Post.h"
 using namespace std;
 class TimelineService{
     private:
-    vector <Post> posts;
+    Timeline timeline;
     public:
-    vector <Post> getFeed(const string& username);
+    TimelineService();
+    TimelineService(Timeline&);
+    TimelineService(const TimelineService&);
     void addPost(const Post& post);
     void deletePost(int postId);
+    std::vector<Post> getTimelineForUser(sqlite3* db, const std::string& username);
 };
 
 #endif

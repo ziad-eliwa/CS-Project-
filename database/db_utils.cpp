@@ -413,7 +413,6 @@ bool updateProfile(sqlite3* db, const std::string& username, const std::string& 
     sqlite3_finalize(stmt);
     return success;
 }
-
 std::string getNotifications(sqlite3* db, const std::string& username) {
     std::string userIdQuery = "SELECT id FROM users WHERE username = ?;";
     sqlite3_stmt* userStmt;
@@ -453,4 +452,68 @@ bool markNotificationAsRead(sqlite3* db, int notificationId) {
     bool success = (sqlite3_step(stmt) == SQLITE_DONE);
     sqlite3_finalize(stmt);
     return success;
+}
+
+bool updateUser(sqlite3* db, const std::string& user_id, const std::string& username, const std::string& password_hash, const std::string& profile_pic, const std::string& bio) {
+    std::string query = "UPDATE users SET username = ?, password_hash = ?, profile_pic = ?, bio = ? WHERE id = ?;";
+    sqlite3_stmt* stmt;
+    if (sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, nullptr) != SQLITE_OK)
+        return false;
+    sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, password_hash.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 3, profile_pic.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 4, bio.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 5, user_id.c_str(), -1, SQLITE_STATIC);
+    bool success = (sqlite3_step(stmt) == SQLITE_DONE);
+    sqlite3_finalize(stmt);
+    return success;
+}
+
+bool deleteUser(sqlite3* db, const std::string& user_id) {
+    std::string query = "DELETE FROM users WHERE id = ?;";
+    sqlite3_stmt* stmt;
+    if (sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, nullptr) != SQLITE_OK)
+        return false;
+    sqlite3_bind_text(stmt, 1, user_id.c_str(), -1, SQLITE_STATIC);
+    bool success = (sqlite3_step(stmt) == SQLITE_DONE);
+    sqlite3_finalize(stmt);
+    return success;
+}
+
+bool getUserByUsername(sqlite3* db, const std::string& username, std::string& user_id, std::string& password_hash, std::string& profile_pic, std::string& bio, time_t& created_at) {
+    std::string query = "SELECT id, password_hash, profile_pic, bio, created_at FROM users WHERE username = ?;";
+    sqlite3_stmt* stmt;
+    bool found = false;
+    if (sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
+        sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_STATIC);
+        if (sqlite3_step(stmt) == SQLITE_ROW) {
+            user_id = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
+            password_hash = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
+            profile_pic = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2));
+            bio = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3));
+            created_at = static_cast<time_t>(sqlite3_column_int64(stmt, 4));
+            found = true;
+        }
+        sqlite3_finalize(stmt);
+    }
+    return found;
+}
+
+bool getUserByID(sqlite3* db, const std::string& user_id, std::string& username, std::string& password_hash, std::string& profile_pic, std::string& bio, time_t& created_at) {
+    std::string query = "SELECT username, password_hash, profile_pic, bio, created_at FROM users WHERE id = ?;";
+    sqlite3_stmt* stmt;
+    bool found = false;
+    if (sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
+        sqlite3_bind_text(stmt, 1, user_id.c_str(), -1, SQLITE_STATIC);
+        if (sqlite3_step(stmt) == SQLITE_ROW) {
+            username = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
+            password_hash = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
+            profile_pic = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2));
+            bio = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3));
+            created_at = static_cast<time_t>(sqlite3_column_int64(stmt, 4));
+            found = true;
+        }
+        sqlite3_finalize(stmt);
+    }
+    return found;
 }

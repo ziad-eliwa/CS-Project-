@@ -1,7 +1,6 @@
 CREATE TABLE users (
     id INTEGER PRIMARY KEY,
     username TEXT UNIQUE,
-    email TEXT UNIQUE,
     password_hash TEXT,
     profile_pic TEXT,
     bio TEXT,
@@ -12,7 +11,6 @@ CREATE TABLE posts (
     id INTEGER PRIMARY KEY,
     user_id INTEGER,
     content TEXT,
-    image_url TEXT,
     like_count INTEGER DEFAULT 0,
     comment_count INTEGER DEFAULT 0,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
