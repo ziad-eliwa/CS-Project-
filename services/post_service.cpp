@@ -64,3 +64,67 @@ bool PostService::updatePost(int post_id, const std::string& new_content,
     
     return success;
 }
+
+std::vector<Post> getPostsByUser(sqlite3* db, const std::string& username) {
+    std::vector<Post> posts;
+
+    std::string query = "SELECT posts.id, posts.content, posts.like_count, posts.comment_count, posts.created_at "
+                        "FROM posts JOIN users ON posts.user_id = users.id "
+                        "WHERE users.username = ? ORDER BY posts.created_at DESC;";
+    sqlite3_stmt* stmt;
+
+    if (sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
+        sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_STATIC);
+
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            Post post;
+            post.id = sqlite3_column_int(stmt, 0);
+            post.content = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
+            post.like_count = sqlite3_column_int(stmt, 2);
+            post.comment_count = sqlite3_column_int(stmt, 3);
+            post.created_at = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4));
+
+            posts.push_back(post);
+        }
+        sqlite3_finalize(stmt);
+    }
+
+    return posts;
+}
+
+static bool deletePost(sqlite3* db, int post_id){
+    std::string query = "DELETE FROM posts WHERE id = ?;";
+    sqlite3_stmt* stmt;
+    if (sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, nullptr) != SQLITE_OK)
+        return false;
+    sqlite3_bind_int(stmt, 1, postId);
+    bool success = (sqlite3_step(stmt) == SQLITE_DONE);
+    sqlite3_finalize(stmt);
+    return success;
+}
+
+static int createPost(sqlite3* db, const std::string& username, const std::string& content, const std::string& image_url){
+    std::string userIdQuery = "SELECT id FROM users WHERE username = ?;";
+    sqlite3_stmt* userStmt;
+    int userId = -1;
+    if (sqlite3_prepare_v2(db, userIdQuery.c_str(), -1, &userStmt, nullptr) == SQLITE_OK) {
+        sqlite3_bind_text(userStmt, 1, username.c_str(), -1, SQLITE_STATIC);
+        if (sqlite3_step(userStmt) == SQLITE_ROW) {
+            userId = sqlite3_column_int(userStmt, 0);
+        }
+        sqlite3_finalize(userStmt);
+    }
+    if (userId == -1) return -1;
+    std::string query = "INSERT INTO posts (user_id, content) VALUES (?, ?);";
+    sqlite3_stmt* stmt;
+    if (sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, nullptr) != SQLITE_OK)
+        return -1;
+    sqlite3_bind_int(stmt, 1, userId);
+    sqlite3_bind_text(stmt, 2, content.c_str(), -1, SQLITE_STATIC);
+    bool success = (sqlite3_step(stmt) == SQLITE_DONE);
+    sqlite3_finalize(stmt);
+    if (success) {
+        return sqlite3_last_insert_rowid(db);
+    }
+    return -1;
+}
