@@ -49,7 +49,7 @@ bool registerUser(sqlite3* db, const std::string& username, const std::string& p
     return success;
 }
 // Posts
-int createPost(sqlite3* db, const std::string& username, const std::string& content) {
+/*int createPost(sqlite3* db, const std::string& username, const std::string& content) {
     std::string userIdQuery = "SELECT id FROM users WHERE username = ?;";
     sqlite3_stmt* userStmt;
     int userId = -1;
@@ -73,9 +73,9 @@ int createPost(sqlite3* db, const std::string& username, const std::string& cont
         return sqlite3_last_insert_rowid(db);
     }
     return -1;
-}
+}*/
 
-bool deletePost(sqlite3* db, int postId) {
+/*bool deletePost(sqlite3* db, int postId) {
     std::string query = "DELETE FROM posts WHERE id = ?;";
     sqlite3_stmt* stmt;
     if (sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, nullptr) != SQLITE_OK)
@@ -84,7 +84,7 @@ bool deletePost(sqlite3* db, int postId) {
     bool success = (sqlite3_step(stmt) == SQLITE_DONE);
     sqlite3_finalize(stmt);
     return success;
-}
+}*/
 // Feed database utilities
 std::string getFeed(sqlite3* db, const std::string& username) {
     std::string userIdQuery = "SELECT id FROM users WHERE username = ?;";
@@ -141,7 +141,7 @@ std::string getFeed(sqlite3* db, const std::string& username) {
     return feedData;
 }
 
-std::string getUserPosts(sqlite3* db, const std::string& username) {
+/*std::string getUserPosts(sqlite3* db, const std::string& username) {
     std::string query = "SELECT posts.id, posts.content, posts.like_count, posts.comment_count, posts.created_at FROM posts JOIN users ON posts.user_id = users.id WHERE users.username = ? ORDER BY posts.created_at DESC;";
     sqlite3_stmt* stmt;
     std::string userPostsData = "[";
@@ -161,7 +161,7 @@ std::string getUserPosts(sqlite3* db, const std::string& username) {
     }
     userPostsData += "]";
     return userPostsData;
-}
+}*/
 
 bool likePost(sqlite3* db, int postId, const std::string& username) {
     std::string userIdQuery = "SELECT id FROM users WHERE username = ?;";
