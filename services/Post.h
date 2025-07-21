@@ -26,6 +26,8 @@ public:
     Post();
     Post(int id, const std::string& user_name, const std::string& content, const std::string& image_url, 
         std::time_t created_at, int like_count, int comment_count = 0, int share_count = 0);
+    // Minimal constructor for timeline fetch
+    Post(int id, const std::string& content, const std::string& user_name, std::time_t created_at);
 
     // Getters
     int getId() const;
@@ -49,6 +51,7 @@ public:
     void setLikeCount(int count);
     void setCommentCount(int count);
     void setShareCount(int count);
+    void setCreatedAt(const std::string& createdAt);
 };
 
 #endif

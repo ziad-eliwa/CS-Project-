@@ -693,6 +693,90 @@ body {
   border-color: #d8dadf;
 }
 
+/* Profile Modal Styles */
+#profile-modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.35);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+}
+#profile-modal.active {
+  display: flex;
+}
+#profile-modal .modal-content {
+  background: #fff;
+  padding: 32px 28px 24px 28px;
+  border-radius: 16px;
+  min-width: 340px;
+  max-width: 95vw;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  margin: auto;
+  position: relative;
+  font-family: inherit;
+}
+#profile-modal h2 {
+  margin-top: 0;
+  margin-bottom: 18px;
+  font-size: 1.5rem;
+  color: #0e4bf1;
+  text-align: center;
+}
+#profile-form label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #1c1e21;
+}
+#profile-form input[type="text"],
+#profile-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e4e6ea;
+  border-radius: 8px;
+  background: #f0f2f5;
+  margin-bottom: 14px;
+  font-size: 1rem;
+  transition: border 0.2s;
+}
+#profile-form input[type="text"]:focus,
+#profile-form textarea:focus {
+  border: 1.5px solid #0e4bf1;
+  outline: none;
+}
+#profile-form button[type="submit"] {
+  background: #0e4bf1;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 22px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#profile-form button[type="submit"]:hover {
+  background: #0a3cd4;
+}
+#profile-form button#close-profile-modal {
+  background: #e4e6ea;
+  color: #1c1e21;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 22px;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#profile-form button#close-profile-modal:hover {
+  background: #d8dadf;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .main-container {
@@ -741,5 +825,16 @@ body {
 
   .post-actions {
     flex-direction: column;
+  }
+
+  /* Responsive for modal */
+  #profile-modal .modal-content {
+    min-width: 90vw;
+    padding: 18px 8px 12px 8px;
+  }
+  #profile-form button[type="submit"],
+  #profile-form button#close-profile-modal {
+    width: 100%;
+    margin: 0 0 10px 0;
   }
 }

@@ -38,13 +38,11 @@
             </div>
           </div>
           <div class="profile-dropdown">
-            <img
-              src="https://via.placeholder.com/40"
-              alt="Profile"
-              class="profile-pic"
-            />
-            <span>John Doe</span>
-            <i class="fas fa-caret-down"></i>
+            <a href="/profile">
+              <img id="nav-avatar" src="https://via.placeholder.com/40" alt="Profile" class="profile-pic" />
+              <span id="profile-username"></span>
+              <i class="fas fa-caret-down"></i>
+            </a>
           </div>
         </div>
       </div>
@@ -113,7 +111,7 @@
             />
             <input
               type="text"
-              placeholder="What's on your mind, John?"
+              placeholder="What's on your mind?"
               class="create-post-input"
             />
           </div>
@@ -391,5 +389,23 @@
     </div>
 
     <script src="timeline.js"></script>
+    <script>
+      function getCurrentUsername() {
+        let username = sessionStorage.getItem('username');
+        if (username) return username;
+        const match = document.cookie.match(/username=([^;]+)/);
+        if (match) return match[1];
+        return '';
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        const username = getCurrentUsername();
+        if (username) {
+          const profileName = document.getElementById('profile-username');
+          if (profileName) profileName.textContent = username;
+          const navAvatar = document.getElementById('nav-avatar');
+          if (navAvatar) navAvatar.src = `https://via.placeholder.com/40?text=${username}`;
+        }
+      });
+    </script>
   </body>
 </html>

@@ -5,29 +5,51 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Set output directory to project root for all configurations
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_SOURCE_DIR})
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_CURRENT_SOURCE_DIR})
+# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_SOURCE_DIR})
+# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Find required packages
 find_package(Threads REQUIRED)
+find_package(nlohmann_json 3.2.0 REQUIRED)
 
 # Include directories
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/handlers)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/services)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/utils)
 
-add_executable(MyCrowApp
+# Add all relevant source files to the executable
+set(SOURCES
     main.cpp
+    utils/hash_utils.cpp
     handlers/login_handler.cpp
     handlers/signup_handler.cpp
-    utils/db_utils.cpp
-    utils/hash_utils.cpp
+    handlers/post_handler.cpp
+    handlers/timeline_handler.cpp
+    handlers/profile_handler.cpp
+    services/Post.cpp
+    services/Timeline.cpp
+    services/post_service.cpp
+    services/Timeline_service.cpp
+    services/comment_service.cpp
+    services/comment.cpp
+    services/User.cpp
+    services/profile.cpp
+    services/profile_services.cpp
+    database/db_utils.cpp
+
+    # Add other .cpp files as needed
 )
 
-# Link all libraries together
+add_executable(MyCrowApp ${SOURCES})
+
+
 target_link_libraries(MyCrowApp PRIVATE 
     sqlite3
     Threads::Threads
+    nlohmann_json::nlohmann_json
 )
 
 # For Windows, you might need to link additional libraries

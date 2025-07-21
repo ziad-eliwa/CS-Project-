@@ -65,6 +65,13 @@
           </span>
         </div>
       </div>
+      <div class="profile-dropdown">
+        <a href="/profile">
+          <img id="nav-avatar" src="https://via.placeholder.com/40" alt="Profile" class="profile-pic" />
+          <span id="profile-username"></span>
+          <i class="fas fa-caret-down"></i>
+        </a>
+      </div>
     </div>
 
     <script>
@@ -111,6 +118,8 @@
               if (data.success && data.redirect) {
                 console.log(data.message);
                 sessionStorage.setItem("userSession", "true");
+                sessionStorage.setItem("username", username); // Save username
+                document.cookie = "username=" + encodeURIComponent(username) + "; path=/";
                 window.location.href = data.redirect;
               } else {
                 console.log("Login failed:", data.message);
@@ -163,6 +172,8 @@
             .then((text) => {
               if (text.toLowerCase().includes("success")) {
                 alert("Signup successful! You can now log in.");
+                sessionStorage.setItem("username", username); // Save username
+                document.cookie = "username=" + encodeURIComponent(username) + "; path=/";
                 document.getElementById("check").checked = false; // Switch to login form
               } else {
                 alert("Signup failed: " + text);
@@ -174,5 +185,14 @@
             });
         });
     </script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+  var profileDropdown = document.querySelector('.profile-dropdown');
+  var username = sessionStorage.getItem('username');
+  if (!username && profileDropdown) {
+    profileDropdown.style.display = 'none';
+  }
+});
+</script>
   </body>
 </html>

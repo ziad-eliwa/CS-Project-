@@ -12,7 +12,7 @@ Timeline::Timeline()
 Timeline::Timeline(vector <Post>& postd) : posts(postd)
 {
     sort(posts.begin(), posts.end(), [](const Post& a, const Post& b) {
-        return a.getCreationAt() > b.getCreationAt(); 
+        return a.getcreated_at() > b.getcreated_at(); 
     });
 }
 
@@ -28,7 +28,9 @@ std::vector<Post> Timeline::getPosts() const {
 bool Timeline::addPost(const Post& postd)
 {
     posts.push_back(postd);
+    return true;
 }
+
 bool Timeline::deletePost(const Post& postd)
 {
     auto it = std::remove_if(posts.begin(), posts.end(), [&](const Post& p) {
@@ -54,7 +56,7 @@ std::vector<Post> Timeline::generateTimeline(const std::vector<Post>& userPosts,
     std::vector<Post> timeline = userPosts;
     timeline.insert(timeline.end(), friendsPosts.begin(), friendsPosts.end());
     std::sort(timeline.begin(), timeline.end(), [](const Post& a, const Post& b) {
-        return a.getCreationAt() > b.getCreationAt();
+        return a.getcreated_at() > b.getcreated_at();
     });
     return timeline;
 }
@@ -93,7 +95,7 @@ std::vector<Post> Timeline::fetchTimeline(sqlite3* db, const std::string& user_i
         sqlite3_finalize(stmt);
     }
     std::sort(timelinePosts.begin(), timelinePosts.end(), [](const Post& a, const Post& b) {
-        return a.getCreationAt() > b.getCreationAt();
+        return a.getcreated_at() > b.getcreated_at();
     });
     return timelinePosts;
 }
