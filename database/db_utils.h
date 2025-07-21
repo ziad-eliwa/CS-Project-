@@ -10,13 +10,13 @@ int createPost(sqlite3* db, const std::string& username, const std::string& cont
 bool deletePost(sqlite3* db, int postId);
 // Feed
 std::string getFeed(sqlite3* db, const std::string& username); // returns JSON string
-std::string getUserPosts(sqlite3* db, const std::string& username); // returns JSON string
+// std::string getUserPosts(sqlite3* db, const std::string& username); // returns JSON string
 // Likes
-bool likePost(sqlite3* db, int postId, const std::string& username);
-bool unlikePost(sqlite3* db, int postId, const std::string& username);
+// bool likePost(sqlite3* db, int postId, const std::string& username);
+// bool unlikePost(sqlite3* db, int postId, const std::string& username);
 // Comments 
-int commentOnPost(sqlite3* db, int postId, const std::string& username, const std::string& comment); // returns commentId
-bool deleteComment(sqlite3* db, int commentId);
+// int commentOnPost(sqlite3* db, int postId, const std::string& username, const std::string& comment); // returns commentId
+// bool deleteComment(sqlite3* db, int commentId);
 // friends
 bool addFriend(sqlite3* db, const std::string& username, const std::string& friendUsername);
 bool removeFriend(sqlite3* db, const std::string& username, const std::string& friendUsername);
