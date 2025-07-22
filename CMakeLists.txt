@@ -33,15 +33,11 @@ set(SOURCES
     handlers/like_handler.cpp
     handlers/search_handler.cpp
     services/Post.cpp
-    services/Timeline.cpp
     services/post_service.cpp
-    services/Timeline_service.cpp
     services/comment_service.cpp
     services/comment.cpp
-    services/User.cpp
     services/friend_search_service.cpp
     services/friend_suggestion_service.cpp
-    services/FriendManager.cpp
     services/AVLtree.cpp
     services/BST.cpp
     services/notification_service.cpp

@@ -9,11 +9,9 @@ namespace timeline_handler {
     crow::response handle_get_timeline(sqlite3* db, const crow::request& req) {
         std::string username;
         
-        // Try to get username from URL parameters first
         if (req.url_params.get("username")) {
             username = req.url_params.get("username");
         } else {
-            // Try to get from request body
             auto body = crow::json::load(req.body);
             if (body && body["username"].t() == crow::json::type::String) {
                 username = body["username"].s();
@@ -24,11 +22,9 @@ namespace timeline_handler {
         
         std::cout << "=== TIMELINE REQUEST FOR USER: " << username << " ===" << std::endl;
         
-        // Use the new dynamic timeline service
         DynamicTimelineService dynamicService(db);
         auto posts = dynamicService.generateDynamicTimeline(username, 50);
         
-        // Convert posts to JSON response
         json res = json::array();
         for (const auto& post : posts) {
             res.push_back({

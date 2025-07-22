@@ -298,9 +298,9 @@ std::vector<SearchUser> FriendSearchService::searchUsersByEmail(const std::strin
     // SQL query to search users by email using LIKE pattern matching
     // Uses ORDER BY username for consistent ordering and LIMIT 20 for performance
     const char* sql = R"(
-        SELECT id, username, profile_pic, bio, created_at 
+        SELECT id, username, email, profile_pic, bio, created_at 
         FROM users 
-        WHERE username LIKE ? AND username != ?
+        WHERE email LIKE ? AND username != ?
         ORDER BY username LIMIT 20
     )";
     
@@ -621,7 +621,7 @@ void FriendSearchService::refreshSearchIndex() {
     
     // SQL query to retrieve all users with their basic information
     // Orders by username to improve BST balance (though not guaranteed to be optimal)
-    const char* sql = "SELECT id, username, profile_pic, bio, created_at FROM users ORDER BY username";
+    const char* sql = "SELECT id, username, email, profile_pic, bio, created_at FROM users ORDER BY username";
     sqlite3_stmt* stmt;  // Prepared statement pointer
     
     // Prepare and execute the user retrieval query
