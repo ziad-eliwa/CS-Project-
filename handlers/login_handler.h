@@ -2,7 +2,7 @@
 #include "sqlite3.h"
 #include "unordered_map"
 #include <iostream>
-#include "../include/crow_all.h"
+#include <crow.h>
 
  crow::response handle_login(sqlite3 * db, const crow::request& req);
 // Session management

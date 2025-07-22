@@ -7,11 +7,11 @@
 using namespace std;
 class TimelineService{
     private:
-    Timeline timeline;
+    // Timeline* timeline; // Remove or make pointer if needed
     public:
     TimelineService();
-    TimelineService(Timeline&);
-    TimelineService(const TimelineService&);
+    TimelineService(const TimelineService&) = delete;
+    TimelineService& operator=(const TimelineService&) = delete;
     void addPost(const Post& post);
     std::vector<Post> getTimelineForUser(sqlite3* db, const std::string& username);
 };

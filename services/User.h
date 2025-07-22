@@ -16,8 +16,6 @@ class User{
         std::string profile_picURL;
         std::string bio;
         time_t created_at;
-        Profile user_profile;
-        FriendManager user_friends;
     public:
         // Constructors
         User();

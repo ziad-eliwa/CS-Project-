@@ -6,7 +6,7 @@
 
 using json = nlohmann::json;
 
-crow::response handle_create_comment(sqlite3* db, const crow::request& req) {
+crow::response handle_create_comment(sqlite3* db, const crow::request& req, const std::string& username) {
     try {
         std::cout << "RAW BODY: " << req.body << std::endl;
         auto body = json::parse(req.body);
@@ -18,9 +18,8 @@ crow::response handle_create_comment(sqlite3* db, const crow::request& req) {
         } else {
             return crow::response(400, "Invalid post_id type");
         }
-        std::string user_name = body["user_name"];
         std::string content = body["content"];
-        int result = CommentService::createComment(db, post_id, user_name, content);
+        int result = CommentService::createComment(db, post_id, username, content);
         if (result != -1) {
             return crow::response(201, "Comment added successfully.");
         } else {

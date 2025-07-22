@@ -1,5 +1,5 @@
 #include "login_handler.h"
-#include "../include/crow_all.h"
+#include <crow.h>
 #include "../database/db_utils.h"
 #include "../utils/hash_utils.h"
 #include <iostream>
@@ -44,7 +44,7 @@ crow::response handle_login(sqlite3* db, const crow::request& req) {
         // setts the cookie in the users browser
         res.set_header("Set-Cookie", "session_id=" + session_id + "; Path=/; HttpOnly");
         // sends message to the front end that the login is successful
-        res.write("{\"success\": true, \"message\": \"Login successful!\", \"redirect\": \"/welcome\"}"); 
+        res.write("{\"success\": true, \"message\": \"Login successful!\", \"redirect\": \"/timeline\"}"); 
         return res;
     } else {
         return crow::response(401, "Invalid username or password");

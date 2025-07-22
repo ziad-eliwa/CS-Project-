@@ -1,5 +1,5 @@
 #include "signup_handler.h"
-#include "../include/crow_all.h"
+#include <crow.h>
 #include "../database/db_utils.h"
 #include "../utils/hash_utils.h"
 #include "../services/profile_services.h"

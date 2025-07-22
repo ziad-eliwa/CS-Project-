@@ -3,15 +3,16 @@
 #include "handlers/profile_handler.h"
 #include "handlers/signup_handler.h"
 #include "handlers/timeline_handler.h"
-#include "include/crow_all.h"
+#include <crow.h>
 #include <filesystem>
 #include <fstream>
-#include <iomanip>
 #include <sqlite3.h>
 #include <sstream>
 #include <unordered_map>
-#include "services/post_service.h"
 #include "handlers/comment_handler.h"
+#include "handlers/friend_handler.h"
+#include "handlers/like_handler.h"
+#include "handlers/search_handler.h"
 
 // Use the session management from login_handler
 using ::active_sessions;         // stores the session id->username
@@ -80,8 +81,13 @@ int main() {
   crow::SimpleApp app;
 
   CROW_ROUTE(app, "/")
-  ([]() {
+  ([](const crow::request &req) {
     std::cout << "Serving index.html from: /static/index.html\n";
+    // Log session info for debugging
+    std::string session_id = get_session_from_cookie(req);
+    if (!session_id.empty() && active_sessions.find(session_id) != active_sessions.end()) {
+      std::cout << "User already logged in: " << active_sessions[session_id] << std::endl;
+    }
     return serve_file("static/index.html", "text/html");
   });
 
@@ -111,7 +117,7 @@ int main() {
   CROW_ROUTE(app, "/friends.js")
   ([]() { return serve_file("static/friends.js", "application/javascript"); });
 
-  CROW_ROUTE(app, "/welcome")
+  CROW_ROUTE(app, "/timeline")
   ([](const crow::request &req) {
     std::string session_id = get_session_from_cookie(req);
     std::cout << "=== TIMELINE PAGE ACCESS ATTEMPT ===" << std::endl;
@@ -130,30 +136,146 @@ int main() {
     return serve_file("static/timeline.html", "text/html");
   });
 
+  CROW_ROUTE(app, "/welcome")
+  ([]() { return serve_file("static/welcome.html", "text/html"); });
+
   CROW_ROUTE(app, "/login")
       .methods("POST"_method)(
           [db](const crow::request &req) { return handle_login(db, req); });
 
   CROW_ROUTE(app, "/api/timeline")
       .methods("GET"_method, "POST"_method)([db](const crow::request &req) {
-        return timeline_handler::handle_get_timeline(db, req);
+        // Session validation for timeline access
+        std::string session_id = get_session_from_cookie(req);
+        if (active_sessions.find(session_id) == active_sessions.end()) {
+          return crow::response(401, "Unauthorized");
+        }
+        std::string username = active_sessions[session_id];
+        
+        // Create a new request with username in body for the handler
+        crow::request modified_req = req;
+        std::string body_with_username = "{\"username\":\"" + username + "\"}";
+        modified_req.body = body_with_username;
+        
+        return timeline_handler::handle_get_timeline(db, modified_req);
       });
 
-  CROW_ROUTE(app, "/api/posts").methods("GET"_method)([]() {
+  CROW_ROUTE(app, "/api/posts").methods("GET"_method)([](const crow::request &req) {
+    // Session validation for getting posts
+    std::string session_id = get_session_from_cookie(req);
+    if (active_sessions.find(session_id) == active_sessions.end()) {
+      return crow::response(401, "Unauthorized");
+    }
     return PostHandler::handleGetAllPosts();
   });
 
   CROW_ROUTE(app, "/api/posts")
       .methods("POST"_method)([](const crow::request &req) {
-        return PostHandler::handleCreatePost(req);
+        // Session validation for creating posts
+        std::string session_id = get_session_from_cookie(req);
+        if (active_sessions.find(session_id) == active_sessions.end()) {
+          return crow::response(401, "Unauthorized");
+        }
+        // Add username from session to request context
+        std::string username = active_sessions[session_id];
+        return PostHandler::handleCreatePost(req, username);
       });
 
   CROW_ROUTE(app, "/api/comments").methods("POST"_method)([db](const crow::request& req) {
-    return handle_create_comment(db, req);
+    // Session validation for creating comments
+    std::string session_id = get_session_from_cookie(req);
+    if (active_sessions.find(session_id) == active_sessions.end()) {
+      return crow::response(401, "Unauthorized");
+    }
+    std::string username = active_sessions[session_id];
+    return handle_create_comment(db, req, username);
   });
   CROW_ROUTE(app, "/api/comments").methods("GET"_method)([db](const crow::request& req) {
+    // Session validation for getting comments
+    std::string session_id = get_session_from_cookie(req);
+    if (active_sessions.find(session_id) == active_sessions.end()) {
+      return crow::response(401, "Unauthorized");
+    }
     return handle_get_comments(db, req);
   });
+
+  // Friend Management API Routes
+  CROW_ROUTE(app, "/api/friends/search").methods("GET"_method)([db](const crow::request& req) {
+    return handleSearchUsers(db, req);
+  });
+
+  // Search posts endpoint
+  CROW_ROUTE(app, "/api/search/posts").methods("GET"_method)([db](const crow::request& req) {
+    return search_handler::handle_search_posts(db, req);
+  });
+
+  CROW_ROUTE(app, "/api/friends").methods("GET"_method)([db](const crow::request& req) {
+    return handleGetFriends(db, req);
+  });
+
+  CROW_ROUTE(app, "/api/friends/request").methods("POST"_method)([db](const crow::request& req) {
+    return handleSendFriendRequest(db, req);
+  });
+
+  CROW_ROUTE(app, "/api/friends/respond").methods("POST"_method)([db](const crow::request& req) {
+    return handleRespondToFriendRequest(db, req);
+  });
+
+  CROW_ROUTE(app, "/api/friends/remove").methods("POST"_method)([db](const crow::request& req) {
+    return handleRemoveFriend(db, req);
+  });
+
+  CROW_ROUTE(app, "/api/friends/suggestions").methods("GET"_method)([db](const crow::request& req) {
+    return handleGetFriendSuggestions(db, req);
+  });
+
+  CROW_ROUTE(app, "/api/friends/requests").methods("GET"_method)([db](const crow::request& req) {
+    return handleGetFriendRequests(db, req);
+  });
+
+  // Like Management API Routes
+  CROW_ROUTE(app, "/api/likes/toggle").methods("POST"_method)([db](const crow::request& req) {
+    // Session validation for toggling likes
+    std::string session_id = get_session_from_cookie(req);
+    if (active_sessions.find(session_id) == active_sessions.end()) {
+      return crow::response(401, "Unauthorized");
+    }
+    std::string username = active_sessions[session_id];
+    return handleToggleLike(db, req, username);
+  });
+
+  CROW_ROUTE(app, "/api/likes/status").methods("GET"_method)([db](const crow::request& req) {
+    // Session validation for getting like status
+    std::string session_id = get_session_from_cookie(req);
+    if (active_sessions.find(session_id) == active_sessions.end()) {
+      return crow::response(401, "Unauthorized");
+    }
+    std::string username = active_sessions[session_id];
+    return handleGetLikeStatus(db, req, username);
+  });
+
+  // Get current user endpoint
+  CROW_ROUTE(app, "/api/user/current")
+      .methods("GET"_method)([](const crow::request &req) {
+        std::string session_id = get_session_from_cookie(req);
+        if (!session_id.empty() && active_sessions.find(session_id) != active_sessions.end()) {
+          std::string username = active_sessions[session_id];
+          return crow::response(200, "{\"success\": true, \"username\": \"" + username + "\"}");
+        }
+        return crow::response(401, "{\"success\": false, \"message\": \"Not authenticated\"}");
+      });
+
+  // Logout endpoint
+  CROW_ROUTE(app, "/api/logout")
+      .methods("POST"_method)([](const crow::request &req) {
+        std::string session_id = get_session_from_cookie(req);
+        if (!session_id.empty() && active_sessions.find(session_id) != active_sessions.end()) {
+          active_sessions.erase(session_id);
+          std::cout << "User logged out, session removed: " << session_id << std::endl;
+          return crow::response(200, "{\"success\": true, \"message\": \"Logged out successfully\"}");
+        }
+        return crow::response(400, "{\"success\": false, \"message\": \"No active session found\"}");
+      });
 
   CROW_ROUTE(app, "/signup")
       .methods("POST"_method)(

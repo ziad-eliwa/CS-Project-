@@ -6,16 +6,15 @@
 
 using json = nlohmann::json;
 
-crow::response PostHandler::handleCreatePost(const crow::request& req) {
+crow::response PostHandler::handleCreatePost(const crow::request& req, const std::string& username) {
     try {
         auto body = json::parse(req.body);
-        std::string user_name = body["user_name"];
         std::string content = body["content"];
         std::string image_url = body.value("image_url", "");
         std::string privacy = body.value("privacy", "Public");
 
-        std::cerr << "[CreatePost] user_name: " << user_name << ", content: " << content << std::endl;
-        int result = PostService::createPost(user_name, content, image_url);
+        std::cerr << "[CreatePost] user_name: " << username << ", content: " << content << std::endl;
+        int result = PostService::createPost(username, content, image_url);
         if (result == -1) {
             std::cerr << "[CreatePost] Failed: user not found or DB error." << std::endl;
             return crow::response(400, "Failed to create post: user not found or DB error");

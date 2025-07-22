@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Timeline - 4_ANGRY_MEN</title>
+    <title>Timeline - AUC Stack Exchange</title>
     <link rel="stylesheet" href="timeline.css" />
     <link
       rel="stylesheet"
@@ -15,10 +15,10 @@
     <nav class="navbar">
       <div class="nav-container">
         <div class="nav-left">
-          <h2 class="logo">4_ANGRY_MEN</h2>
+          <h2 class="logo">AUC Stack Exchange</h2>
           <div class="search-box">
             <i class="fas fa-search"></i>
-            <input type="text" placeholder="Search friends, posts..." />
+            <input type="text" placeholder="Search users and posts..." />
           </div>
         </div>
         <div class="nav-right">
@@ -32,6 +32,13 @@
             </div>
             <div class="nav-icon">
               <a href="/friends"> <i class="fas fa-user-friends"></i> </a>
+            </div>
+          </div>
+          <div class="profile-dropdown">
+            <span id="current-username">Username</span>
+            <i class="fas fa-caret-down"></i>
+            <div class="dropdown-menu">
+              <a href="#" class="dropdown-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
           </div>
         </div>
@@ -59,23 +66,7 @@
           </ul>
         </div>
 
-        <div class="sidebar-section">
-          <h4>Online Friends</h4>
-          <div class="online-friends">
-            <div class="friend-item">
-              <span>Alice Smith</span>
-              <div class="online-indicator"></div>
-            </div>
-            <div class="friend-item">
-              <span>Bob Wilson</span>
-              <div class="online-indicator"></div>
-            </div>
-            <div class="friend-item">
-              <span>Carol Brown</span>
-              <div class="online-indicator"></div>
-            </div>
-          </div>
-        </div>
+
       </aside>
 
       <!-- Main Content -->
@@ -244,72 +235,10 @@
           </article>
         </div>
 
-        <!-- Load More Button -->
-        <div class="load-more">
-          <button class="load-more-btn">Load More Posts</button>
-        </div>
+
       </main>
 
-      <!-- Right Sidebar -->
-      <aside class="right-sidebar">
-        <div class="sidebar-section">
-          <h4>Friend Requests</h4>
-          <div class="friend-requests">
-            <div class="friend-request">
-              <div class="request-avatar">
-                <!-- Avatar will be removed -->
-              </div>
-              <div class="request-info">
-                <h5>Emma Wilson</h5>
-                <p>2 mutual friends</p>
-                <div class="request-actions">
-                  <button class="accept-btn">Accept</button>
-                  <button class="decline-btn">Decline</button>
-                </div>
-              </div>
-            </div>
-            <div class="friend-request">
-              <div class="request-avatar">
-                <!-- Avatar will be removed -->
-              </div>
-              <div class="request-info">
-                <h5>David Lee</h5>
-                <p>5 mutual friends</p>
-                <div class="request-actions">
-                  <button class="accept-btn">Accept</button>
-                  <button class="decline-btn">Decline</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="sidebar-section">
-          <h4>Suggested Friends</h4>
-          <div class="suggested-friends">
-            <div class="suggestion">
-              <div class="suggestion-avatar">
-                <!-- Avatar will be removed -->
-              </div>
-              <div class="suggestion-info">
-                <h6>Lisa Chen</h6>
-                <p>3 mutual friends</p>
-                <button class="add-friend-btn">Add Friend</button>
-              </div>
-            </div>
-            <div class="suggestion">
-              <div class="suggestion-avatar">
-                <!-- Avatar will be removed -->
-              </div>
-              <div class="suggestion-info">
-                <h6>Tom Anderson</h6>
-                <p>1 mutual friend</p>
-                <button class="add-friend-btn">Add Friend</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </aside>
     </div>
 
     <script src="timeline.js"></script>

@@ -6,10 +6,6 @@
 
 TimelineService::TimelineService() {}
 
-TimelineService::TimelineService(Timeline& t) : timeline(t) {}
-
-TimelineService::TimelineService(const TimelineService& other) : timeline(other.timeline) {}
-
 std::vector<Post> TimelineService::getTimelineForUser(sqlite3* db, const std::string& username) {
     User user = User::loadByUsername(db, username);
     std::string user_id = user.getUserID();
@@ -20,5 +16,5 @@ std::vector<Post> TimelineService::getTimelineForUser(sqlite3* db, const std::st
 }
 
 void TimelineService::addPost(const Post& post) {
-    timeline.addPost(post);
+    // Implement if needed, or remove this method if not used
 }
