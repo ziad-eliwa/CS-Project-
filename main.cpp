@@ -1,6 +1,5 @@
 #include "handlers/login_handler.h"
 #include "handlers/post_handler.h"
-#include "handlers/profile_handler.h"
 #include "handlers/signup_handler.h"
 #include "handlers/timeline_handler.h"
 #include <crow.h>
@@ -297,20 +296,3 @@ int main() {
 
     
 }
-
-//                          to check cookies is working
-/* Open browser Developer Tools (F12)
-Go to http://localhost:8080/ and login normally
-Once on welcome page, go to Application/Storage tab → Cookies
-Find the session_id cookie and change its value to something random like
-"fake123" Refresh the page
- */
-
-// why this happens??
-
-/*  get_session_from_cookie() returns "fake123"
-"fake123" is not in active_sessions map
-Invalid session = redirect to login
-This proves our server validates sessions properly and doesn't trust client-side
-data
- */

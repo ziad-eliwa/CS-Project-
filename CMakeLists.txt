@@ -28,7 +28,6 @@ set(SOURCES
     handlers/signup_handler.cpp
     handlers/post_handler.cpp
     handlers/timeline_handler.cpp
-    handlers/profile_handler.cpp
     handlers/comment_handler.cpp
     handlers/friend_handler.cpp
     handlers/like_handler.cpp
@@ -40,8 +39,6 @@ set(SOURCES
     services/comment_service.cpp
     services/comment.cpp
     services/User.cpp
-    services/profile.cpp
-    services/profile_services.cpp
     services/friend_search_service.cpp
     services/friend_suggestion_service.cpp
     services/FriendManager.cpp
@@ -50,6 +47,7 @@ set(SOURCES
     services/notification_service.cpp
     services/like_service.cpp
     services/dynamic_timeline_service.cpp
+    services/PostAVLTree.cpp
     database/db_utils.cpp
 
     # Add other .cpp files as needed

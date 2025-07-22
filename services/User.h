@@ -4,7 +4,6 @@
 #include <bits/stdc++.h>
 #include <ctime>
 #include <string>
-#include "profile.h"
 #include "FriendManager.h"
 #include <sqlite3.h>
 

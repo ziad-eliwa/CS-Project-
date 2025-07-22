@@ -7,32 +7,21 @@ DynamicTimelineService::DynamicTimelineService(sqlite3* db)
     : db(db), friendService(db) {}
 
 std::vector<Post> DynamicTimelineService::generateDynamicTimeline(const std::string& username, int limit) {
-    std::cout << "=== GENERATING DYNAMIC TIMELINE FOR: " << username << " ===" << std::endl;
+    std::cout << "=== GENERATING AVL-MANAGED DYNAMIC TIMELINE FOR: " << username << " ===" << std::endl;
     
-    // Step 1: Load friends from AVL tree
-    std::vector<std::string> friends = loadFriendsFromAVL(username);
-    std::cout << "Loaded " << friends.size() << " friends from AVL tree" << std::endl;
+    timelineTree.clear();
     
-    // Step 2: Fetch user's own posts
-    std::vector<Post> userPosts = fetchUserPosts(username, 50);
-    std::cout << "Fetched " << userPosts.size() << " user posts" << std::endl;
+    loadAllPostsIntoAVL(username);
     
-    // Step 3: Fetch friends' posts
-    std::vector<Post> friendsPosts = fetchFriendsPosts(friends, 20);
-    std::cout << "Fetched " << friendsPosts.size() << " friends posts" << std::endl;
+    std::vector<Post> timeline = timelineTree.getTimelineInOrder(limit);
+    std::cout << "Generated AVL timeline with " << timeline.size() << " posts" << std::endl;
     
-    // Step 4: Merge posts efficiently using merge sort approach
-    std::vector<Post> timeline = mergePostsEfficiently(userPosts, friendsPosts, limit);
-    std::cout << "Generated timeline with " << timeline.size() << " posts" << std::endl;
-    
-    // Step 5: Update post counts (likes, comments)
     updatePostCounts(timeline);
     
     return timeline;
 }
 
 std::vector<std::string> DynamicTimelineService::loadFriendsFromAVL(const std::string& username) {
-    // Use the existing friend service which uses AVL tree internally
     std::string jsonFriends = getFriendsList(db, username);
     
     std::vector<std::string> friends;
@@ -44,16 +33,35 @@ std::vector<std::string> DynamicTimelineService::loadFriendsFromAVL(const std::s
     } catch (const std::exception& e) {
         std::cerr << "Error parsing friends JSON: " << e.what() << std::endl;
     }
-    
     return friends;
 }
 
-std::vector<Post> DynamicTimelineService::fetchUserPosts(const std::string& username, int limit) {
-    std::vector<Post> posts;
+void DynamicTimelineService::addPostToTimeline(const Post& post) {
+    timelineTree.insert(post);
+}
+
+void DynamicTimelineService::removePostFromTimeline(int postId) {
+    timelineTree.remove(postId);
+}
+
+void DynamicTimelineService::clearTimeline() {
+    timelineTree.clear();
+}
+
+void DynamicTimelineService::loadAllPostsIntoAVL(const std::string& username) {
+    std::cout << "Loading posts into AVL tree for user: " << username << std::endl;
+    loadUserPostsIntoAVL(username, 50);
+    std::vector<std::string> friends = loadFriendsFromAVL(username);
+    std::cout << "Loaded " << friends.size() << " friends from AVL tree" << std::endl;
+    loadFriendsPostsIntoAVL(friends, 20);
+    std::cout << "Total posts in AVL tree: " << timelineTree.size() << std::endl;
+}
+
+void DynamicTimelineService::loadUserPostsIntoAVL(const std::string& username, int limit) {
     std::string userId = getUserIdFromUsername(username);
     
     if (userId.empty()) {
-        return posts;
+        return;
     }
     
     std::string query = R"(
@@ -89,67 +97,19 @@ std::vector<Post> DynamicTimelineService::fetchUserPosts(const std::string& user
             int like_count = sqlite3_column_int(stmt, 4);
             int comment_count = sqlite3_column_int(stmt, 5);
             
-            // Create post with all information (no image_url since it doesn't exist in schema)
             Post post(id, username, content, "", created_at, like_count, comment_count);
-            posts.push_back(post);
+            timelineTree.insert(post);
         }
         sqlite3_finalize(stmt);
     } else {
         std::cerr << "Error preparing user posts query: " << sqlite3_errmsg(db) << std::endl;
     }
-    
-    return posts;
 }
 
-std::vector<Post> DynamicTimelineService::fetchFriendsPosts(const std::vector<std::string>& friendUsernames, int postsPerFriend) {
-    std::vector<Post> allFriendsPosts;
-    
+void DynamicTimelineService::loadFriendsPostsIntoAVL(const std::vector<std::string>& friendUsernames, int postsPerFriend) {
     for (const std::string& friendUsername : friendUsernames) {
-        std::vector<Post> friendPosts = fetchUserPosts(friendUsername, postsPerFriend);
-        allFriendsPosts.insert(allFriendsPosts.end(), friendPosts.begin(), friendPosts.end());
+        loadUserPostsIntoAVL(friendUsername, postsPerFriend);
     }
-    
-    // Sort friends' posts by timestamp (newest first)
-    std::sort(allFriendsPosts.begin(), allFriendsPosts.end(), 
-              [](const Post& a, const Post& b) {
-                  return a.getcreated_at() > b.getcreated_at();
-              });
-    
-    return allFriendsPosts;
-}
-
-std::vector<Post> DynamicTimelineService::mergePostsEfficiently(const std::vector<Post>& userPosts, 
-                                                               const std::vector<Post>& friendsPosts, 
-                                                               int limit) {
-    std::vector<Post> timeline;
-    timeline.reserve(std::min(limit, static_cast<int>(userPosts.size() + friendsPosts.size())));
-    
-    // Use merge sort approach for efficient merging of two sorted arrays
-    size_t i = 0, j = 0;
-    
-    while (i < userPosts.size() && j < friendsPosts.size() && timeline.size() < limit) {
-        if (userPosts[i].getcreated_at() > friendsPosts[j].getcreated_at()) {
-            timeline.push_back(userPosts[i]);
-            i++;
-        } else {
-            timeline.push_back(friendsPosts[j]);
-            j++;
-        }
-    }
-    
-    // Add remaining posts from user posts
-    while (i < userPosts.size() && timeline.size() < limit) {
-        timeline.push_back(userPosts[i]);
-        i++;
-    }
-    
-    // Add remaining posts from friends posts
-    while (j < friendsPosts.size() && timeline.size() < limit) {
-        timeline.push_back(friendsPosts[j]);
-        j++;
-    }
-    
-    return timeline;
 }
 
 std::string DynamicTimelineService::getUserIdFromUsername(const std::string& username) {
@@ -187,9 +147,7 @@ std::string DynamicTimelineService::getUsernameFromUserId(const std::string& use
 }
 
 void DynamicTimelineService::updatePostCounts(std::vector<Post>& posts) {
-    // Post counts are already fetched in the main query, but we can update them here if needed
     for (Post& post : posts) {
-        // Counts are already set during fetchUserPosts, so this is mainly for future extensibility
-        // We could add real-time count updates here if needed
+
     }
 }
